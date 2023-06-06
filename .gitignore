@@ -1,0 +1,89 @@
+# Environment Configuration
+.env
+.env.*
+
+# Dependency directory
+  node_modules
+
+# Test coverage directory
+coverage
+
+# Ignore Apple macOS Desktop Services Store
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# ngrok tunnel file
+config/tunnel.pid
+
+# vite build output
+dist/
+
+# extensions build output
+extensions/*/build
+
+# Node library SQLite database
+web/database.sqlite
+
+# Project #
+###################
+node_modules
+dist
+upload
+deploy.log
+config/shopify.yml
+npm-debug.log
+.env
+.env.*
+
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Custom #
+######################
+.sass-cache
+.cache/*
+_site
+/.idea
+/.vscode
+secrets.json
+.jekyll-metadata
+.ruby-version
