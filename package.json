@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@shopify/app": "3.46.2",
-    "@shopify/cli": "3.46.2"
+    "@shopify/cli": "3.46.2",
+    "dotenv": "^16.1.4",
+    "pg": "^8.11.0"
   },
   "author": "Saba Hannan",
   "private": true,
