@@ -22,6 +22,7 @@
   "workspaces": [
     "web",
     "web/frontend",
-    "extensions/*"
+    "extensions/*",
+    "backend"
   ]
 }
