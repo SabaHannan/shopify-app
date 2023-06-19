@@ -34,6 +34,7 @@ const imgCarouselSchema = buildSchema(`
 
     type Mutation {
         createPicture(pictureName: String!, pictureData: String): picture!
+        updatePicture(pictureID: Int!, pictureName: String, pictureData: String): picture!
     }
 `);
 

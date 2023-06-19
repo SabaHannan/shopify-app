@@ -1,5 +1,5 @@
 import picture from "../models/picture.Model";
-import { createPicture, getPictureByID, getPictures } from "../services/pictureServices";
+import { createPicture, getPictureByID, getPictures, updatePicture } from "../services/pictureServices";
 
 //Resolver for the pictures entity
 const pictureResolver = {
@@ -50,6 +50,23 @@ const pictureResolver = {
         catch(error) {
             throw new Error("Failed to store new picture: " + error);
         }
+    },
+
+    //Mutation function to update an existing picture in the database
+    updatePicture: async (args: { pictureID: number, pictureName: string, pictureData: any}): Promise<picture> => {
+
+        let updatePic: picture = new picture();
+        const { pictureID, pictureName, pictureData } = args;
+
+        try {
+            updatePic = await updatePicture(pictureID, pictureName, pictureData);
+
+            return updatePic;
+        }
+        catch(error) {
+            throw new Error("Failed to update picture: " + error);
+        }
+
     }
 };
 

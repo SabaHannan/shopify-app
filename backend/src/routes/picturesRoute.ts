@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPicture, getPictureByID, getPictures } from '../services/pictureServices';
+import { createPicture, getPictureByID, getPictures, updatePicture } from '../services/pictureServices';
 import picture from '../models/picture.Model';
 
 //Declare a router instance
@@ -45,13 +45,29 @@ pictureRoute.post("/", async (req, res) => {
     try {
         let nuPic : picture = new picture();
 
-        const {pictureName, pictureData } = req.body;
+        const { pictureName, pictureData } = req.body;
 
         nuPic = await createPicture(pictureName, pictureData) as picture;
 
         res.json(nuPic);
     }catch(error) {
         res.status(500).json({ error: "Failed to create picture in the database"});
+    }
+});
+
+pictureRoute.put("/updatePicture/:pictureID", async (req, res) => {
+    try{
+        let updatePic = new picture();
+
+        const { pictureName, pictureData } = req.body;
+        const pictureID: number = parseInt(req.params.pictureID, 10)
+
+        updatePic = await updatePicture(pictureID, pictureName, pictureData);
+
+        res.status(201).json(updatePic);
+    }
+    catch(error) {
+        res.status(500).json({ error: "Failed to update picture in the database" });
     }
 });
 

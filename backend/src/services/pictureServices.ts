@@ -70,3 +70,35 @@ export const createPicture = async (pictureName: string, pictureData: any): Prom
         throw new Error("Failed to store a new picture in the database");
     }
 }
+
+/**
+ * Function to update a picture in the database
+ * @param pictureID - integer
+ * @param pictureName - string
+ * @param pictureData - any | binary array as a string
+ * @returns picture - updated picture object
+ */
+export const updatePicture = async (pictureID: number, pictureName: string, pictureData: any): Promise<picture> => {
+    let updatePic: picture = new picture();
+    const dataValues = {
+        pictureName,
+        pictureData
+    }
+    
+    try {
+        const [affectedRows] = await picture.update(dataValues, {
+            where: { pictureID },
+            returning: true
+        });
+
+        if(affectedRows > 0) {
+            updatePic = await picture.findOne({ where: { pictureID }}) as picture;
+        }
+
+        return updatePic;
+
+    }
+    catch(error) {
+        throw new Error("Failed to update picture in the database");
+    }
+}
