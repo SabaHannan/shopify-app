@@ -1,11 +1,11 @@
-import { picture } from "../models/picture.Model";
+import picture from "../models/picture.Model";
 import { getPictureByID, getPictures } from "../services/pictureServices";
 
 //Resolver for the pictures entity
 const pictureResolver = {
     //query to get picture object given its id
     getPictureByID: async (args: { pictureID: number }): Promise<picture> => {
-        let picObject: picture = {};
+        let picObject: picture = new picture();
         const { pictureID } = args;
 
         try {

@@ -5,6 +5,7 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import resolver from './resolver';
 import pictureRoute from './routes/picturesRoute';
+import sequelize from './sequelize';
 dotenv.config();
 
 //Configuring backend
@@ -59,8 +60,10 @@ app.use('/graphql', async (req, res) => {
 app.use('/api', pictureRoute);
 
 //Start the server and listen for incoming requests
-app.listen(port || process.env.SERVER_PORT, () => {
-    testDBconnection();
-    console.log("Server is running on http://localhost:"+port+"/graphql");
-    console.log("Server is also running on http://localhost:"+port+"/api");
-});
+sequelize.sync().then(() => {
+    app.listen(port || process.env.SERVER_PORT, () => {
+        testDBconnection();
+        console.log("Server is running on http://localhost:"+port+"/graphql");
+        console.log("Server is also running on http://localhost:"+port+"/api");
+    });
+})

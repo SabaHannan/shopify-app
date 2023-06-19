@@ -1,12 +1,12 @@
 import express from 'express';
 import { getPictureByID, getPictures } from '../services/pictureServices';
-import { picture } from '../models/picture.Model';
+import picture from '../models/picture.Model';
 
 //Declare a router instance
 const pictureRoute = express.Router();
 
 //Declare a picture object from the model
-var picObject: picture = {};
+var picObject: picture = new picture();
 
 //GET request handlers
 pictureRoute.get("/getPictureByID/:pictureID", async (required, result) => {

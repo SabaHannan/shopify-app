@@ -1,4 +1,4 @@
-import { picture } from '../models/picture.Model';
+import picture from '../models/picture.Model';
 import { dbPool } from '../server';
 
 /**
@@ -8,23 +8,19 @@ import { dbPool } from '../server';
  */
 export const getPictureByID = async (pictureID: number): Promise<picture> => {
 
-    let client = await dbPool.connect();
-    let picObject: picture = {};
+    let picObject: picture = new picture();
 
     try {
         
-        const result = await client.query("SELECT * FROM picture WHERE \"pictureID\" = " + pictureID)
+        const result = await picture.findByPk(pictureID) as picture;
 
-        picObject = result.rows[0];
+        picObject = result;
 
         return picObject;
 
     }
     catch(error) {
         throw new Error("Failed to fecth picture entity by ID");
-    }
-    finally {
-        if(client) client.release();
     }
 }
 
@@ -34,20 +30,16 @@ export const getPictureByID = async (pictureID: number): Promise<picture> => {
  */
 export const getPictures = async (): Promise<picture[]> => {
     
-    let client = await dbPool.connect();
     let picObjects: picture[] = [];
 
     try {
-        const result = await client.query("SELECT * FROM picture");
+        const result = await picture.findAll() as picture[];
 
-        picObjects = result.rows;
+        picObjects = result;
 
         return picObjects;
     }
     catch(error) {
         throw new Error("Failed to fetch pictures from database");
-    }
-    finally {
-        if(client) client.release();
     }
 }
