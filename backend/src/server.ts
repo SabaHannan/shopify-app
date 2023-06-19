@@ -5,7 +5,6 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 import resolver from './resolver';
 import pictureRoute from './routes/picturesRoute';
-import pictureResolver from './resolvers/pictureResolver';
 dotenv.config();
 
 //Configuring backend
@@ -48,7 +47,8 @@ app.use('/graphql', async (req, res) => {
     try {
         return await graphqlHTTP({
             schema: imgCarouselSchema,
-            rootValue: resolver
+            rootValue: resolver,
+            graphiql: true
         })(req, res);
     } catch (error) {
         console.error("GraphQL error: ", error);
