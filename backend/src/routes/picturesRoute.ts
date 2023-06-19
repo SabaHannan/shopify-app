@@ -1,5 +1,5 @@
 import express from 'express';
-import { createPicture, getPictureByID, getPictures, updatePicture } from '../services/pictureServices';
+import { createPicture, deletePicture, getPictureByID, getPictures, updatePicture } from '../services/pictureServices';
 import picture from '../models/picture.Model';
 
 //Declare a router instance
@@ -70,5 +70,20 @@ pictureRoute.put("/updatePicture/:pictureID", async (req, res) => {
         res.status(500).json({ error: "Failed to update picture in the database" });
     }
 });
+
+pictureRoute.delete("/deletePicture/:pictureID", async (req, res) => {
+    try{
+        let picDeleted: Boolean = false;
+
+        const pictureID: number = parseInt(req.params.pictureID, 10);
+
+        picDeleted = await deletePicture(pictureID);
+
+        res.status(201).json(picDeleted);
+    }
+    catch(error) {
+        res.status(500).json({ error: "Failed to remove picture from the database"});
+    }
+})
 
 export default pictureRoute;

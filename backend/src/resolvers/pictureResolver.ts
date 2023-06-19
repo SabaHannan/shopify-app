@@ -1,5 +1,5 @@
 import picture from "../models/picture.Model";
-import { createPicture, getPictureByID, getPictures, updatePicture } from "../services/pictureServices";
+import { createPicture, deletePicture, getPictureByID, getPictures, updatePicture } from "../services/pictureServices";
 
 //Resolver for the pictures entity
 const pictureResolver = {
@@ -67,6 +67,22 @@ const pictureResolver = {
             throw new Error("Failed to update picture: " + error);
         }
 
+    },
+
+    //Mutation function to permanently remove a picture from the database
+    deletePicture: async (args: {pictureID: number}): Promise<Boolean> => {
+        
+        let picDeleted: Boolean = false;
+        const { pictureID } = args;
+
+        try {
+            picDeleted = await deletePicture(pictureID);
+
+            return picDeleted;
+        }
+        catch(error) {
+            throw new Error("Failed to delete picture: " + error);
+        }
     }
 };
 

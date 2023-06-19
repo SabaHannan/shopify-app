@@ -102,3 +102,25 @@ export const updatePicture = async (pictureID: number, pictureName: string, pict
         throw new Error("Failed to update picture in the database");
     }
 }
+
+export const deletePicture = async (pictureID: number): Promise<Boolean> => {
+
+    let dltPic = new picture();
+
+    try{
+        dltPic = await picture.findOne({ where: { pictureID }}) as picture;
+
+        if(dltPic != null) {
+            const affectedRows = await picture.destroy({ where: {pictureID}});
+
+            if(affectedRows > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    catch(error) {
+        throw new Error("Failed to delete picture in the database");
+    }
+}
