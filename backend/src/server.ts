@@ -1,15 +1,16 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { graphqlHTTP } from 'express-graphql';
+import imgCarouselSchema from './schema';
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import resolver from './resolver';
+import pictureRoute from './routes/picturesRoute';
+import pictureResolver from './resolvers/pictureResolver';
 dotenv.config();
 
+//Configuring backend
 const app = express();
-const port = 3000;
-
-//Start the server
-app.listen(port, () => {
-    console.log("Server now running on port " + port);
-});
+const port = parseInt(process.env.SERVER_PORT as string, 10);
 
 //Configuring connection to the PostgreSQL database connection
 const pool = new Pool({
@@ -40,4 +41,26 @@ async function testDBconnection() {
     
 }
 
-testDBconnection();
+export const dbPool = pool;
+
+//Defining the routes for GraphQL requests
+app.use('/graphql', async (req, res) => {
+    try {
+        return await graphqlHTTP({
+            schema: imgCarouselSchema,
+            rootValue: resolver
+        })(req, res);
+    } catch (error) {
+        console.error("GraphQL error: ", error);
+    }
+});
+
+//Defining the routes for HTTP API requests
+app.use('/api', pictureRoute);
+
+//Start the server and listen for incoming requests
+app.listen(port || process.env.SERVER_PORT, () => {
+    testDBconnection();
+    console.log("Server is running on http://localhost:"+port+"/graphql");
+    console.log("Server is also running on http://localhost:"+port+"/api");
+});
