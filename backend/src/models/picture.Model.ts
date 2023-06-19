@@ -3,3 +3,4 @@ export interface picture {
     pictureName?: string,
     pictureData?: any
 }
+
