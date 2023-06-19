@@ -1,6 +1,6 @@
 import { picture } from "../models/picture.Model";
 import { dbPool } from "../server";
-import { getPictures } from "../services/pictureServices";
+import { getPictureByID, getPictures } from "../services/pictureServices";
 
 //Resolver for the pictures entity
 const pictureResolver = {
@@ -12,14 +12,10 @@ const pictureResolver = {
 
             try {
                 //extract the pictureID from the args and use it to fetch product from the DB
-                /*picObject = await getPictureByID(pictureID);
+                picObject = await getPictureByID(pictureID);
                 console.log(picObject);
 
-                return picObject;*/
-
-                const result = await client.query("SELECT * FROM picture WHERE \"pictureID\" = " + pictureID)
-
-                picObject = result.rows[0];
+                return picObject;
 
         return picObject;
             }
