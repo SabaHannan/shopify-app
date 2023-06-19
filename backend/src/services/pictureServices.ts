@@ -43,3 +43,30 @@ export const getPictures = async (): Promise<picture[]> => {
         throw new Error("Failed to fetch pictures from database");
     }
 }
+
+/**
+ * Function to create and store a new picture entry in the database
+ * @param pictureName - String 
+ * @param pictureData - binary data | any
+ * @returns picture - picture object with auto generated id
+ */
+export const createPicture = async (pictureName: string, pictureData: any): Promise<picture> => {
+    
+    let nuPic: picture = new picture();
+
+    try {
+        const data = {
+            pictureName, 
+            pictureData
+        }
+
+        const result = await picture.create(data, {returning: true}) as picture;
+
+        nuPic = result;
+
+        return nuPic;
+    }
+    catch(error) {
+        throw new Error("Failed to store a new picture in the database");
+    }
+}

@@ -1,5 +1,5 @@
 import picture from "../models/picture.Model";
-import { getPictureByID, getPictures } from "../services/pictureServices";
+import { createPicture, getPictureByID, getPictures } from "../services/pictureServices";
 
 //Resolver for the pictures entity
 const pictureResolver = {
@@ -34,6 +34,23 @@ const pictureResolver = {
             throw new Error("Failed to fetch picture objects: " + error);
         }
     },
+
+    //Mutation function to create new picture entries in the database
+    createPicture: async ( args: { pictureName: string, pictureData: any }): Promise<picture> => {
+        
+        let nuPic: picture = new picture();
+        const { pictureName, pictureData } = args;
+
+        try {
+            //let the create picture function in the service post the new object to the database
+            nuPic = await createPicture(pictureName, pictureData);
+
+            return nuPic;
+        }
+        catch(error) {
+            throw new Error("Failed to store new picture: " + error);
+        }
+    }
 };
 
 export default pictureResolver;

@@ -17,8 +17,7 @@ picture.init({
     pictureID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true,
-        autoIncrementIdentity: true
+        autoIncrement: true
     },
     pictureName: {
         type: DataTypes.STRING,

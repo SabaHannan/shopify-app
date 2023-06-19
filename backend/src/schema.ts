@@ -31,6 +31,10 @@ const imgCarouselSchema = buildSchema(`
         getPictureByID(pictureID: Int!): picture!
         getPictures: [picture!]!
     }
+
+    type Mutation {
+        createPicture(pictureName: String!, pictureData: String): picture!
+    }
 `);
 
 export default imgCarouselSchema;

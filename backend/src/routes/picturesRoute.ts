@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPictureByID, getPictures } from '../services/pictureServices';
+import { createPicture, getPictureByID, getPictures } from '../services/pictureServices';
 import picture from '../models/picture.Model';
 
 //Declare a router instance
@@ -8,7 +8,7 @@ const pictureRoute = express.Router();
 //Declare a picture object from the model
 var picObject: picture = new picture();
 
-//GET request handlers
+//QUERY request handlers
 pictureRoute.get("/getPictureByID/:pictureID", async (required, result) => {
     try {        
         //get parameter from the http address
@@ -37,6 +37,21 @@ pictureRoute.get("/getPictures", async (req, res) => {
     catch(error) {
         res.status(500).json({ error: "Failed to fetch pictures from the database"});
         console.error("GET request failed", error);
+    }
+});
+
+//MUTATION request handlers
+pictureRoute.post("/", async (req, res) => {
+    try {
+        let nuPic : picture = new picture();
+
+        const {pictureName, pictureData } = req.body;
+
+        nuPic = await createPicture(pictureName, pictureData) as picture;
+
+        res.json(nuPic);
+    }catch(error) {
+        res.status(500).json({ error: "Failed to create picture in the database"});
     }
 });
 
