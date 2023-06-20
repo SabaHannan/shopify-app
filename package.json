@@ -4,6 +4,9 @@
   "main": "web/index.js",
   "license": "UNLICENSED",
   "scripts": {
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js",
     "shopify": "shopify",
     "build": "shopify app build",
     "dev": "shopify app dev",
