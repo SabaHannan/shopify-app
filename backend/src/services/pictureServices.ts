@@ -1,5 +1,4 @@
 import picture from '../models/picture.Model';
-import { dbPool } from '../server';
 
 /**
  * Fucntion to get picture entity from the database given its ID

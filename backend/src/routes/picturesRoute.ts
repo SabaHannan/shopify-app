@@ -5,11 +5,9 @@ import picture from '../models/picture.Model';
 //Declare a router instance
 const pictureRoute = express.Router();
 
-//Declare a picture object from the model
-var picObject: picture = new picture();
-
 //QUERY request handlers
 pictureRoute.get("/getPictureByID/:pictureID", async (required, result) => {
+    var picObject: picture = new picture();
     try {        
         //get parameter from the http address
         const pictureID: number = parseInt(required.params.pictureID, 10);

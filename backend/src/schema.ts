@@ -5,6 +5,12 @@ const imgCarouselSchema = buildSchema(`
     type store {
         storeID: Int!
         storeName: String!
+        storeURL: String,
+        accessToken: String,
+        apiKey: String,
+        apiSecretKey: String,
+        webhookEvent: String,
+        webhookCallbackURL: String
         carousels: [carousel!] 
     }
 
@@ -28,6 +34,7 @@ const imgCarouselSchema = buildSchema(`
     }
 
     type Query {
+        getStoreByID(storeID: Int!): store!
         getPictureByID(pictureID: Int!): picture!
         getPictures: [picture!]!
     }
