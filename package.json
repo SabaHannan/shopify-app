@@ -4,9 +4,15 @@
   "main": "backend/server.js",
   "license": "UNLICENSED",
   "scripts": {
+<<<<<<< HEAD
     "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "frontend": "cd web/frontend && npm run dev",
     "backend": "cd backend && npm run dev",
+=======
+    "start": "pm2 start ecosystem.config.js",
+    "stop": "pm2 stop ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js",
+>>>>>>> main
     "shopify": "shopify",
     "build": "shopify app build",
     "dev": "shopify app dev",
