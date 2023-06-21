@@ -17,7 +17,9 @@ const imgCarouselSchema = buildSchema(`
     type carousel {
         carouselID: Int!
         storeID: Int!
-        carouselName: String
+        carouselName: String!
+        description: String
+        activeStatus: Boolean!
         carouselpictures: [carouselPicture!]
     }
 
