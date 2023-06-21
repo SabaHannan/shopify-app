@@ -41,6 +41,7 @@ const imgCarouselSchema = buildSchema(`
 
     type Mutation {
         createPicture(pictureName: String!, pictureData: String): picture!
+        createStore(name: String!, url: String, token: String, apikey: String, secretkey: String, whEvent: String, whCallbackURL: String): store!
         updatePicture(pictureID: Int!, pictureName: String, pictureData: String): picture!
         deletePicture(pictureID: Int!): Boolean!
     }
