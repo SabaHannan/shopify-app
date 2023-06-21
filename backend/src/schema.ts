@@ -37,6 +37,7 @@ const imgCarouselSchema = buildSchema(`
 
     type Query {
         getStoreByID(storeID: Int!): store!
+        getCarouselByID(carouselID: Int!): carousel!
         getPictureByID(pictureID: Int!): picture!
         getPictures: [picture!]!
     }
