@@ -1,5 +1,5 @@
 import store from "../models/store.Model";
-import { createNewStore, getStoreByID, updateStore } from "../services/storeService";
+import { createNewStore, deleteStore, getStoreByID, updateStore } from "../services/storeService";
 
 //Resolvers for the store entity
 const storeResolver = {
@@ -40,7 +40,7 @@ const storeResolver = {
             return newStore;
         }
         catch(error) {
-            throw new Error("Failed to save new Store to the database");
+            throw new Error("Failed to save new Store to the database: " + error);
         }
     },
 
@@ -66,7 +66,22 @@ const storeResolver = {
 
         }
         catch(error) {
-            throw new Error("Failed to update the store in the database");
+            throw new Error("Failed to update the store in the database: " + error);
+        }
+    },
+
+    deleteStore: async (args: {storeID: number}): Promise<Boolean> => {
+
+        let storeDeleted: Boolean = false;
+        const { storeID } = args;
+
+        try {
+            storeDeleted = await deleteStore(storeID);
+
+            return storeDeleted
+        }
+        catch(error) {
+            throw new Error("Failed to remove store from the database: " + error);
         }
     }
 }

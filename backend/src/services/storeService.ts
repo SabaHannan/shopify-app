@@ -86,3 +86,30 @@ export const updateStore = async (storeID: number, updateStore: store): Promise<
         throw new Error("Failed to update store in the database");
     }
 }
+
+/**
+ * Method to permantly remove a store from the database
+ * @param storeID - integer
+ * @returns boolean
+ */
+export const deleteStore = async (storeID: number): Promise<Boolean> => {
+
+    let dltStore: store = new store();
+
+    try {
+        dltStore = await store.findByPk(storeID)as store;
+
+        if(dltStore != null) {
+            const affectedRow = await store.destroy({where: {storeID}});
+            
+            if(affectedRow > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    catch(error) {
+        throw new Error("Failed to remove the store from the database");
+    }
+} 

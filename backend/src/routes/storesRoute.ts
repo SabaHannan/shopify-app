@@ -1,6 +1,6 @@
 import express from 'express';
 import store from '../models/store.Model';
-import { createNewStore, getStoreByID, updateStore } from '../services/storeService';
+import { createNewStore, deleteStore, getStoreByID, updateStore } from '../services/storeService';
 
 //Declare a router instance
 const storeRoute = express.Router();
@@ -48,7 +48,7 @@ storeRoute.post("/", async (req, res) => {
     }
 });
 
-storeRoute.put("/:storeID", async (req, res) => {
+storeRoute.put("updateStore/:storeID", async (req, res) => {
 
     const storeID: number  = parseInt(req.params.storeID, 10);
     const { storeName, storeURL, accessToken, apiKey, apiSecretKey, webhookEvent, webhookCallbackURL } = req.body;
@@ -73,6 +73,24 @@ storeRoute.put("/:storeID", async (req, res) => {
         console.error("PUT request failed", error);
     }
 
+});
+
+storeRoute.delete("deleteStore/:storeID", async (req, res) => {
+
+    let storeDeleted: Boolean = false;
+    const storeID: number = parseInt(req.params.storeID, 10);
+
+    try {
+
+        storeDeleted = await deleteStore(storeID) as Boolean;
+
+        res.status(201).json(storeDeleted);
+
+    }
+    catch(error) {
+        res.status(500).json(storeDeleted);
+        console.error("Failed to remove store", error);
+    }
 })
 
 export default storeRoute;
