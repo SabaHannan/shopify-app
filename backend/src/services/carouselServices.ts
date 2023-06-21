@@ -20,3 +20,27 @@ export const getCarouselByID = async (carouselID: number): Promise<carousel> => 
         throw new Error("Failed to fetch Carousel from the database: " + error);
     }
 };
+
+/**
+ * Mutation method to create and save a new Carousel object into the database
+ * @param nuCarousel - Carousel instance
+ * @returns nuCarousel - json carousel object with auto generated id
+ */
+export const createCarousel = async (nuCarousel: carousel): Promise<carousel> => {
+
+    let newCar = {
+        storeID: nuCarousel.storeID,
+        carouselName: nuCarousel.carouselName,
+        description: nuCarousel.description,
+        activeStatus: nuCarousel.activeStatus
+    }
+
+    try {
+        nuCarousel = await carousel.create(newCar, {returning: true}) as carousel;
+
+        return nuCarousel;
+    }
+    catch(error) {
+        throw new Error("Failed to save new Carousel into the database");       
+    }
+}

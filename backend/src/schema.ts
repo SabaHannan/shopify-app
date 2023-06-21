@@ -46,6 +46,7 @@ const imgCarouselSchema = buildSchema(`
         createStore(name: String!, url: String, token: String, apikey: String, secretkey: String, whEvent: String, whCallbackURL: String): store!
         updateStore(storeID: Int!, name: String, url: String, token: String, apikey: String, secretkey: String, whEvent: String, whCallbackURL: String): store!
         deleteStore(storeID: Int!): Boolean!
+        createCarousel(storeID: Int!, carouselName: String!, description: String!, activeStatus: Boolean!): carousel!
         createPicture(pictureName: String!, pictureData: String): picture!
         updatePicture(pictureID: Int!, pictureName: String, pictureData: String): picture!
         deletePicture(pictureID: Int!): Boolean!
