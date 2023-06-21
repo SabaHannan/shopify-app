@@ -1,6 +1,6 @@
 import express from 'express';
 import store from '../models/store.Model';
-import { createNewStore, getStoreByID } from '../services/storeService';
+import { createNewStore, getStoreByID, updateStore } from '../services/storeService';
 
 //Declare a router instance
 const storeRoute = express.Router();
@@ -46,6 +46,33 @@ storeRoute.post("/", async (req, res) => {
         res.status(500).json({ error: "Failed to save Store to the database"});
         console.error("Request faile", error);
     }
+});
+
+storeRoute.put("/:storeID", async (req, res) => {
+
+    const storeID: number  = parseInt(req.params.storeID, 10);
+    const { storeName, storeURL, accessToken, apiKey, apiSecretKey, webhookEvent, webhookCallbackURL } = req.body;
+
+    let upStore: store = new store({
+        storeName: storeName,
+        storeURL: storeURL,
+        accessToken: accessToken,
+        apiKey: apiKey,
+        apiSecretKey: apiSecretKey,
+        webhookEvent: webhookEvent,
+        webhookCallbackURL: webhookCallbackURL
+    });
+
+    try {
+        upStore = await updateStore(storeID, upStore);
+
+        res.status(201).json(upStore);
+    }
+    catch(error) {
+        res.status(500).json({error: "Failed to update the store in the database"});
+        console.error("PUT request failed", error);
+    }
+
 })
 
 export default storeRoute;

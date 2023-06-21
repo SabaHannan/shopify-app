@@ -1,5 +1,5 @@
 import store from "../models/store.Model";
-import { createNewStore, getStoreByID } from "../services/storeService";
+import { createNewStore, getStoreByID, updateStore } from "../services/storeService";
 
 //Resolvers for the store entity
 const storeResolver = {
@@ -21,6 +21,7 @@ const storeResolver = {
         }
     },
 
+    //Mutation to create and save a new store to the database
     createStore: async (args: { name: string, url: string, token: string, apikey: string, secretkey: string, whEvent: string, whCallbackURL: string }): Promise<store> => {
         
         let newStore: store = new store({
@@ -40,6 +41,32 @@ const storeResolver = {
         }
         catch(error) {
             throw new Error("Failed to save new Store to the database");
+        }
+    },
+
+    updateStore: async (args: {storeID: number, name: string, url: string, token: string, apikey: string, secretkey: string, whEvent: string, whCallbackURL: string}): Promise<store> => {
+        
+        let storeValues: store = new store({
+            storeName: args.name,
+            storeURL: args.url,
+            accessToken: args.token, 
+            apiKey: args.apikey,
+            apiSecretKey: args.secretkey,
+            webhookEvent: args.whEvent,
+            webhookCallbackURL: args.whCallbackURL
+        })
+
+        const { storeID } = args
+
+        try {
+
+            storeValues = await updateStore(storeID, storeValues);
+
+            return storeValues;
+
+        }
+        catch(error) {
+            throw new Error("Failed to update the store in the database");
         }
     }
 }

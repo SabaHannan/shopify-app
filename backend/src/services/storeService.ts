@@ -49,3 +49,40 @@ export const createNewStore = async (nuStore: store): Promise<store> => {
         throw new Error("Failed to save new store to the database");
     }
 }
+
+/**
+ * Mutation method to update a store instance in the databse
+ * @param storeID - integer store id
+ * @param updateStore - parameter store object
+ * @returns upStore - updated store object
+ */
+export const updateStore = async (storeID: number, updateStore: store): Promise<store> => {
+    
+    let storeValues = {
+        storeName: updateStore.storeName,
+        storeURL: updateStore.storeURL,
+        accessToken: updateStore.accessToken,
+        apiKey: updateStore.apiKey,
+        apiSecretKey: updateStore.apiSecretKey,
+        webhookEvent: updateStore.webhookEvent,
+        webhookCallbackURL: updateStore.webhookCallbackURL
+    };
+
+    let upStore: store = new store();
+
+    try {
+        const [affectedRows] = await store.update(storeValues, {
+            where: { storeID }, 
+            returning: true
+        });
+
+        if(affectedRows > 0) {
+            upStore = await store.findByPk(storeID) as store;
+        }
+
+        return upStore;
+    }
+    catch(error) {
+        throw new Error("Failed to update store in the database");
+    }
+}
