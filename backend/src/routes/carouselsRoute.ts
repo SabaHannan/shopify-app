@@ -1,6 +1,6 @@
 import express from 'express';
 import carousel from '../models/carousel.Model';
-import { createCarousel, getCarouselByID, updateCarousel } from '../services/carouselServices';
+import { createCarousel, deleteCarousel, getCarouselByID, updateCarousel } from '../services/carouselServices';
 
 //Declare a router instance
 const carouselRoute = express.Router();
@@ -64,6 +64,20 @@ carouselRoute.put("updaetCarousel/:carouselID", async (req, res) => {
     catch(error) {
         res.status(500).json({error: "Failed to update carousel in the database"});
         console.error("request failed", error);
+    }
+});
+
+carouselRoute.delete("deleteCarousel/:carouselID", async (req, res) => {
+    const carouselID: number = parseInt(req.params.carouselID, 10);
+
+    try {
+        const result = await deleteCarousel(carouselID);
+
+        res.status(201).json(result);
+    }
+    catch(error) {
+        res.status(500).json({error: "Failed to remove carousel"})
+        console.error("resquest failed", error);
     }
 })
 

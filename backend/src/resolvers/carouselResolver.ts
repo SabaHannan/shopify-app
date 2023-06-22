@@ -1,5 +1,5 @@
 import carousel from "../models/carousel.Model";
-import { createCarousel, getCarouselByID, updateCarousel } from "../services/carouselServices";
+import { createCarousel, deleteCarousel, getCarouselByID, updateCarousel } from "../services/carouselServices";
 
 //Resolver for the Carousel entity
 const carouselResolver = {
@@ -56,6 +56,16 @@ const carouselResolver = {
         }
         catch(error) {
             throw new Error("Failed to update Carousel: " + error);
+        }
+    },
+
+    //Mutation method to remove a carousel from the database
+    deleteCarousel: async (args: {carouselID: number}): Promise<Boolean> => {
+        try {
+            return await deleteCarousel(args.carouselID) as Boolean;
+        }
+        catch(error) {
+            throw new Error("Failed to delete carousel: " + error);
         }
     }
 };

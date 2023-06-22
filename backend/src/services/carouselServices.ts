@@ -75,4 +75,30 @@ export const updateCarousel = async (carouselID: number, updateCarousel: carouse
     catch(error) {
         throw new Error("Failed to update Carousel: " + error);
     }
+};
+
+/**
+ * Mutator method to permanently remove a carousel from the database
+ * @param carouselID - integer
+ * @returns Boolean - if deleted or not
+ */
+export const deleteCarousel = async (carouselID: number): Promise<Boolean> => {
+    let dltCar = new carousel();
+
+    try{
+        dltCar = await carousel.findByPk(carouselID) as carousel;
+
+        if(dltCar != null) {
+            const affectedRows = await carousel.destroy({ where: {carouselID}});
+
+            if(affectedRows > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    catch(error) {
+        throw new Error("Failed to remove carousel from the database: " + error);
+    }
 }
