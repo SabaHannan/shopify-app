@@ -1,5 +1,5 @@
 import carousel from "../models/carousel.Model";
-import { createCarousel, getCarouselByID } from "../services/carouselServices";
+import { createCarousel, getCarouselByID, updateCarousel } from "../services/carouselServices";
 
 //Resolver for the Carousel entity
 const carouselResolver = {
@@ -37,6 +37,25 @@ const carouselResolver = {
         }
         catch(error) {
             throw new Error("Failed to save new Carousel into the database: " + error);
+        }
+    },
+
+    //Mutation method to update an existing carousel
+    updateCarousel: async (args: {carouselID: number, carouselName: string, description: string, activeStatus: Boolean}): Promise<carousel> => {
+
+        let upCarousel: carousel = new carousel({
+            carouselName: args.carouselName,
+            description: args.description,
+            activeStatus: args.activeStatus
+        });
+
+        try {
+            upCarousel = await updateCarousel(args.carouselID, upCarousel);
+
+            return upCarousel;
+        }
+        catch(error) {
+            throw new Error("Failed to update Carousel: " + error);
         }
     }
 };

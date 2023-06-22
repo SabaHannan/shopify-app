@@ -1,6 +1,6 @@
 import express from 'express';
 import carousel from '../models/carousel.Model';
-import { createCarousel, getCarouselByID } from '../services/carouselServices';
+import { createCarousel, getCarouselByID, updateCarousel } from '../services/carouselServices';
 
 //Declare a router instance
 const carouselRoute = express.Router();
@@ -41,6 +41,28 @@ carouselRoute.post("/", async (req, res) => {
     }
     catch(error) {
         res.status(500).json({ error: "Failed to save new Carousel to the database"});
+        console.error("request failed", error);
+    }
+});
+
+carouselRoute.put("updaetCarousel/:carouselID", async (req, res) => {
+
+    const { carouselName, description, activeStatus } = req.body;
+    const carouselID: number = parseInt(req.params.carouselID, 10);
+
+    let upCarousel: carousel = new carousel({
+        carouselName: carouselName,
+        description: description,
+        activeStatus: activeStatus
+    })
+
+    try {
+        upCarousel = await updateCarousel(carouselID, upCarousel);
+
+        res.status(201).json(upCarousel);
+    }
+    catch(error) {
+        res.status(500).json({error: "Failed to update carousel in the database"});
         console.error("request failed", error);
     }
 })

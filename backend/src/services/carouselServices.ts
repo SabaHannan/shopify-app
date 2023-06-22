@@ -43,4 +43,36 @@ export const createCarousel = async (nuCarousel: carousel): Promise<carousel> =>
     catch(error) {
         throw new Error("Failed to save new Carousel into the database");       
     }
+};
+
+/**
+ * Mutation method to update carousel instance in the databse
+ * @param carouselID - integer
+ * @param updateCarousel - carousel object
+ * @returns upCar - json carousel object
+ */
+export const updateCarousel = async (carouselID: number, updateCarousel: carousel): Promise<carousel> => {
+    let carData = {
+        carouselName: updateCarousel.carouselName,
+        description: updateCarousel.description,
+        activeStatus: updateCarousel.activeStatus
+    } 
+
+    let upCar: carousel = new carousel();
+
+    try {
+        const [affectedRows] = await carousel.update(carData, {
+            where: { carouselID },
+            returning: true
+        });
+
+        if(affectedRows > 0) {
+            upCar = await carousel.findByPk(carouselID) as carousel;
+        }
+
+        return upCar;
+    }
+    catch(error) {
+        throw new Error("Failed to update Carousel: " + error);
+    }
 }
