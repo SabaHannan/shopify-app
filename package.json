@@ -13,7 +13,10 @@
   },
   "dependencies": {
     "@shopify/app": "3.46.2",
-    "@shopify/cli": "3.46.2"
+    "@shopify/cli": "3.46.2",
+    "jquery": "^3.7.0",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1"
   },
   "author": "Saba Hannan",
   "private": true,

@@ -22,10 +22,14 @@ export default function App() {
           <QueryProvider>
             <NavigationMenu
               navigationLinks={[
-                {
-                  label: t("NavigationMenu.newPage"),
-                  destination: "/carousel/new",
-                },
+                // {
+                //   label: t("NavigationMenu.newPage"),
+                //   destination: "/carousel/new",
+                // },
+                // {
+                //   label: t("NavigationMenu.imageCarousel"),
+                //   destination: "/carousel/imageCarousel",
+                // },
               ]}
             />
             <Routes pages={pages} />
