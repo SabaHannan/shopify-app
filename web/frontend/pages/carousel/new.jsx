@@ -13,6 +13,8 @@ import {
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { NoteMinor } from "@shopify/polaris-icons";
+import { useNavigate } from 'react-router-dom';
+import { ProductsCard } from '../../../frontend/components/ProductsCard';
 
 export default function ManageCode() {
   // TRANSLATION
@@ -23,6 +25,9 @@ export default function ManageCode() {
   const [errorMessage, setErrorMessage] = useState(null);
   // FORM TITLE
   const [title, setTitle] = useState([]);
+  // TO ROUTE TO A DIFFERENT PAGE IN APP
+  const navigate = useNavigate();
+
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -61,10 +66,15 @@ export default function ManageCode() {
   };
  
   // HANDLE FORM SUBMISSION
-  const handleSubmit = (event) => console.log(event) 
+  const handleSubmit = () => {
+    console.log("SAVED!")
+    // Redirect to a different page within the app
+    navigate('/carousel/imageCarousel');
+    console.log("NOW WE HERE!")
+  } 
 
   const validImageTypes = ['image/*'];
-  // If the selectedFiles array is empty then dispay the <DropZone.FileUpload>
+  // If the selectedFiles array is empty then display the <DropZone.FileUpload>
   const fileUpload = !selectedFiles.length && <DropZone.FileUpload />;
 
   // Maps over the selectedFiles state to render thumbnail previews of the selected image files
@@ -78,19 +88,19 @@ export default function ManageCode() {
             source={
             validImageTypes.includes(file.type)
               // If statement to either render the actual file preview or NoteMinor icon
-              ? window.URL.createObjectURL(file)
+              ? URL.createObjectURL(file)
               : NoteMinor
             }
           />
+          {console.log("URL: " + URL.createObjectURL(file))}
           {/* Div to display the caption of the thumbnails */}
           <div>
             {file.name} <Text variant="bodySm" as='p'>{file.size} bytes</Text>
-            {console.log("index" + index)}
+            {console.log("file name" + file.name)}
           </div>
         </div>
       ))}
     </div>
-
   );
 
   // HANDLE FORM TITLE CHANGE 
@@ -150,6 +160,9 @@ export default function ManageCode() {
           </div>
         </FormLayout>
       </Form>
-  </Page>
+      <div>
+        <ProductsCard />
+      </div>
+    </Page>
   );
 }
