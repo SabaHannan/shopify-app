@@ -14,7 +14,7 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { NoteMinor } from "@shopify/polaris-icons";
 import { useNavigate } from 'react-router-dom';
-import { ProductsCard } from '../../../frontend/components/ProductsCard';
+// import { SlickImages } from '../../components/SlickImages';
 
 export default function ManageCode() {
   // TRANSLATION
@@ -161,7 +161,7 @@ export default function ManageCode() {
         </FormLayout>
       </Form>
       <div>
-        <ProductsCard />
+        {/* <SlickImages /> */}
       </div>
     </Page>
   );
