@@ -1,12 +1,10 @@
-// import $ from 'jquery';
 import 'slick-carousel';
 import React from 'react';
 import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
-// import '../slick-carousel/slick.min.js';
 
-export function ProductsCard () {
+export function SlickImages () {
 
     const settings = {
         dots: true,
