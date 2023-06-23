@@ -1,14 +1,16 @@
 {
   "HomePage": {
-    "heading": "Nice work on building a Shopify app 🎉",
-    "learnMore": "Learn more about building out your app in <ShopifyTutorialLink>this Shopify tutorial</ShopifyTutorialLink> 📚",
-    "startPopulatingYourApp": "Ready to go? Start populating your app with some sample products to view and test in your store.",
-    "title": "App name",
+    "heading": "Create your first carousel",
+    "learnMore": "It's time to create a new image slider that will bring life and dynamism to your website or app. With our intuitive tools and powerful features, you can effortlessly showcase your images in a captivating carousel. Let your imagination run wild as you curate a visually captivating experience that will leave a lasting impression. Get started now and elevate your content to new heights with our easy-to-use image slider creator.",
+    "startPopulatingYourApp": "Enjoy the process and create something truly extraordinary!",
+    "title": "Image carousel",
     "trophyAltText": "Nice work on building a Shopify app",
-    "yourAppIsReadyToExplore": "Your app is ready to explore! It contains everything you need to get started including the <PolarisLink>Polaris design system</PolarisLink>, <AdminApiLink>Shopify Admin API</AdminApiLink>, and <AppBridgeLink>App Bridge</AppBridgeLink> UI library and components."
+    "welcome": "Get ready to unleash your creativity and captivate your audience with stunning visuals. It's time to create a new image slider that will bring life and dynamism to your website. With our intuitive tools and powerful features, you can effortlessly showcase your images in a captivating carousel. Let your imagination run wild as you curate a visually captivating experience that will leave a lasting impression. Get started now and elevate your content to new heights with our easy-to-use image slider creator."
   },
   "NavigationMenu": {
-    "pageName": "Page name"
+    "pageName": "Page name",
+    "newPage":  "New carousel",
+    "imageCarousel": "Carousel"
   },
   "NotFound": {
     "description": "Check the URL and try again, or use the search bar to find what you need.",
