@@ -1,11 +1,7 @@
 // FIRST PAGE 
 import {
   Page,
-  Layout,
-  VerticalStack,
-  Text,
   Button,
-  TextContainer,
   MediaCard,
   HorizontalStack,
 } from "@shopify/polaris";

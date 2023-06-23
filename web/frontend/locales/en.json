@@ -9,7 +9,8 @@
   },
   "NavigationMenu": {
     "pageName": "Page name",
-    "newPage":  "New carousel"
+    "newPage":  "New carousel",
+    "imageCarousel": "Carousel"
   },
   "NotFound": {
     "description": "Check the URL and try again, or use the search bar to find what you need.",
