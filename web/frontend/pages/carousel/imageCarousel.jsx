@@ -8,7 +8,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { SlickImages } from '../../components/SlickImages';
 
-// Page that a person can edit and see one of their carousels.
+// Page that a person can edit and see one of their carousels. Should take in an ID
 const imageCarousel = () => {
   // TRANSLATION
   const { t } = useTranslation();
