@@ -8,7 +8,6 @@ import {
   QueryProvider,
   PolarisProvider,
 } from "./components";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
@@ -16,20 +15,10 @@ export default function App() {
   const pages = import.meta.globEager("./pages/**/!(*.test.[jt]sx)*.([jt]sx)");
   const { t } = useTranslation();
 
-  //Declaring the backend connection URI
-  const ENDPOINT_URI = 'http://localhost:3000';
-
-  //Creating the Apollo client instance
-  const client = new ApolloClient({
-      uri: ENDPOINT_URI,
-      cache: new InMemoryCache()
-  });
-
   return (
     <PolarisProvider>
       <BrowserRouter>
         <AppBridgeProvider>
-          <ApolloProvider client={client}>
             <QueryProvider>
               <NavigationMenu
                 navigationLinks={[
@@ -45,7 +34,6 @@ export default function App() {
               />
               <Routes pages={pages} />
             </QueryProvider>
-          </ApolloProvider>  
         </AppBridgeProvider>
       </BrowserRouter>
     </PolarisProvider>
