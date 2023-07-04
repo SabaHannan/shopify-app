@@ -14,6 +14,9 @@ import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { NoteMinor } from "@shopify/polaris-icons";
 import { useNavigate } from 'react-router-dom';
+import useCreatePicture from '../../graphql/mutations/PictureMutation';
+import { serialiseFile } from "../../graphql/SerializeFile";
+import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
 // import { SlickImages } from '../../components/SlickImages';
 
 export default function ManageCode() {
@@ -24,10 +27,21 @@ export default function ManageCode() {
   // ERROR MESSAGE
   const [errorMessage, setErrorMessage] = useState(null);
   // FORM TITLE
-  const [title, setTitle] = useState([]);
+  const [title, setTitle] = useState();
+  // FORM DESCRIPTION
+  const [description, setDescription] = useState();
   // TO ROUTE TO A DIFFERENT PAGE IN APP
   const navigate = useNavigate();
 
+  // DATABASE IMAGES
+  const [pictures, setPictures] = useState([]);
+
+  const {createPicture, loading} = useCreatePicture();
+
+  //DATABASE CAROUSEL 
+  const [carousel, setCarousel] = useState();
+
+  const {createCarousel} = useCreateCarousel();
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -66,12 +80,81 @@ export default function ManageCode() {
   };
  
   // HANDLE FORM SUBMISSION
-  const handleSubmit = () => {
-    console.log("SAVED!")
-    // Redirect to a different page within the app
+  const handleSubmit = async () => {
+    console.log("SAVING IMAGES!")
+
+    //Create Carousel intance in the databse first before uploading the pictures
+    await makeCarousel();
+    
+    try {
+        const createdPictures = [];
+
+        for(const file of selectedFiles) {
+          const binData = await serialiseFile(file);
+
+          const nuPic = {
+            picName: file.name,
+            picData: binData
+          }
+
+          const { data } = await createPicture({variables: nuPic});
+
+          if(loading) {
+            console.log("loading...")
+          }
+
+          console.log(data.createPicture);
+
+          createdPictures.push(data.createPicture);
+
+        }
+
+        setPictures(createdPictures);
+
+
+        
+        pictures.forEach(pic => {
+          console.log(pic);
+        })
+    }
+    catch(error) {
+      console.error("Something went wrong: ", error.errorMessage)
+    }
+
     navigate('/carousel/imageCarousel');
     console.log("NOW WE HERE!")
-  } 
+  }
+
+  const makeCarousel = async () => {
+
+    //Create carousel instance from the title and description
+    console.log("CREATING CAROUSEL");
+    
+    try {
+      
+      const nuCarousel = {
+        storeID: 4,
+        carName: title,
+        carDescription: description,
+        carStatus: false
+      }
+
+      console.log(nuCarousel);
+
+      const { data } = await createCarousel({variables: nuCarousel })
+
+      console.log(data.createCarousel);
+      
+      setCarousel(data.createCarousel);
+
+    }
+    catch(error) {
+      console.error("Something went wrong: ", error)
+    }
+
+  }
+
+
 
   const validImageTypes = ['image/*'];
   // If the selectedFiles array is empty then display the <DropZone.FileUpload>
@@ -92,19 +175,20 @@ export default function ManageCode() {
               : NoteMinor
             }
           />
-          {console.log("URL: " + URL.createObjectURL(file))}
+          {/*console.log("URL: " + URL.createObjectURL(file))*/}
           {/* Div to display the caption of the thumbnails */}
           <div>
             {file.name} <Text variant="bodySm" as='p'>{file.size} bytes</Text>
-            {console.log("file name" + file.name)}
+            {/*console.log("file name" + file.name)*/}
           </div>
         </div>
       ))}
     </div>
   );
 
-  // HANDLE FORM TITLE CHANGE 
+  // HANDLE FORM CHANGES 
   const handleFormTitleChange = (value) => setTitle(value);
+  const handleFormDescriptionChange = (value) => setDescription(value);
 
   return (
     <Page>
@@ -126,18 +210,32 @@ export default function ManageCode() {
       {/* TITLE OF THE IMAGE CAROUSEL */}
       <Form>
         <FormLayout>
-          <TextField
-            label="Title"
-            type="text"
-            onChange={handleFormTitleChange}
-            value={title}
-            helpText="This title will not be visible on your Store."
-            autoComplete='off'
-          />
+          
+          <div>
+            <TextField
+              label="Title"
+              type="text"
+              onChange={handleFormTitleChange}
+              value={title}
+              helpText="enter the Title of the carousel"
+              autoComplete='off'
+            />
+          </div>
+
+          <div>
+            <TextField
+              label="Description"
+              type="text"
+              onChange={handleFormDescriptionChange}
+              value={description}
+              helpText="Briefly describe the carousel you want to create"
+              autoComplete='off'
+            />
+          </div>
         
           {/* IMAGE UPLOADING */}
           <div>
-            <Text>Upload images</Text>
+            <Text>upload Carousel Images</Text>
             <DropZone
               accept="image/*"
               dropOnPage
