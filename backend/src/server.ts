@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 import resolver from './resolver';
 import pictureRoute from './routes/picturesRoute';
 import sequelize from './sequelize';
+import cors from 'cors';
+
 dotenv.config();
 
 //Configuring backend
@@ -42,6 +44,11 @@ async function testDBconnection() {
 }
 
 export const dbPool = pool;
+
+//Enable CORS for the frontend client only
+app.use(cors({
+    origin: 'https://client-hosts-ordinary-rental.trycloudflare.com'
+}));
 
 //Defining the routes for GraphQL requests
 app.use('/graphql', async (req, res) => {

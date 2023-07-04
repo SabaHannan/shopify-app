@@ -19,21 +19,21 @@ export default function App() {
     <PolarisProvider>
       <BrowserRouter>
         <AppBridgeProvider>
-          <QueryProvider>
-            <NavigationMenu
-              navigationLinks={[
-                // {
-                //   label: t("NavigationMenu.newPage"),
-                //   destination: "/carousel/new",
-                // },
-                // {
-                //   label: t("NavigationMenu.imageCarousel"),
-                //   destination: "/carousel/imageCarousel",
-                // },
-              ]}
-            />
-            <Routes pages={pages} />
-          </QueryProvider>
+            <QueryProvider>
+              <NavigationMenu
+                navigationLinks={[
+                  // {
+                  //   label: t("NavigationMenu.newPage"),
+                  //   destination: "/carousel/new",
+                  // },
+                  // {
+                  //   label: t("NavigationMenu.imageCarousel"),
+                  //   destination: "/carousel/imageCarousel",
+                  // },
+                ]}
+              />
+              <Routes pages={pages} />
+            </QueryProvider>
         </AppBridgeProvider>
       </BrowserRouter>
     </PolarisProvider>

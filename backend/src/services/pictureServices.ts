@@ -59,13 +59,18 @@ export const createPicture = async (pictureName: string, pictureData: any): Prom
             pictureData
         }
 
-        const result = await picture.create(data, {returning: true}) as picture;
+        const result = await picture.create(data, {returning: true});
 
-        nuPic = result;
+        nuPic.pictureID = result.pictureID;
+        nuPic.pictureName = result.pictureName;
+
+        //Converting the byte array from the database into a base 64 string
+        nuPic.pictureData = Buffer.from(result.pictureData, 'binary').toString('base64');
 
         return nuPic;
     }
     catch(error) {
+        console.error("Failed to save new picture:", error)
         throw new Error("Failed to store a new picture in the database");
     }
 }
