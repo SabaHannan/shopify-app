@@ -1,4 +1,5 @@
 import picture from "../models/picture.Model";
+import { createReadStream } from "fs";
 import { createPicture, deletePicture, getPictureByID, getPictures, updatePicture } from "../services/pictureServices";
 
 //Resolver for the pictures entity
@@ -42,12 +43,18 @@ const pictureResolver = {
         const { pictureName, pictureData } = args;
 
         try {
+            //Convert the base64 string to bytea
+            const buffer = Buffer.from(pictureData, 'base64');
+            const uint8Array = new Uint8Array(buffer);
+            const bytea = Array.from(uint8Array);
+
             //let the create picture function in the service post the new object to the database
-            nuPic = await createPicture(pictureName, pictureData);
+            nuPic = await createPicture(pictureName, bytea);
 
             return nuPic;
         }
         catch(error) {
+            console.error("Something went wrong in PictureResolver:", error)
             throw new Error("Failed to store new picture: " + error);
         }
     },

@@ -39,7 +39,7 @@ pictureRoute.get("/getPictures", async (req, res) => {
 });
 
 //MUTATION request handlers
-pictureRoute.post("/", async (req, res) => {
+pictureRoute.post("/createPicture", async (req, res) => {
     try {
         let nuPic : picture = new picture();
 
