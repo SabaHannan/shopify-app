@@ -1,0 +1,1 @@
+// Page where all the carousels of the store are loaded.

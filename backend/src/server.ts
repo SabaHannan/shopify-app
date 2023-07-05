@@ -47,7 +47,7 @@ export const dbPool = pool;
 
 //Enable CORS for the frontend client only
 app.use(cors({
-    origin: 'https://client-hosts-ordinary-rental.trycloudflare.com'
+    // origin: 'https://client-hosts-ordinary-rental.trycloudflare.com'
 }));
 
 //Defining the routes for GraphQL requests
