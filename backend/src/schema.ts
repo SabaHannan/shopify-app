@@ -56,6 +56,8 @@ const imgCarouselSchema = buildSchema(`
         createPicture(pictureName: String!, pictureData: String!): picture!
         updatePicture(pictureID: Int!, pictureName: String, pictureData: Upload): picture!
         deletePicture(pictureID: Int!): Boolean!
+
+        createCarouselPicture(carouselID: Int!, pictureID: Int!): carouselPicture!
     }
 `);
 
