@@ -5,7 +5,6 @@ import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
 
 // Function takes in an array of images
-
 export function SlickImages () {
 
     const settings = {

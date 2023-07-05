@@ -1,7 +1,5 @@
 import {
-    Layout,
     Page,
-    Text,
     Button,
   } from "@shopify/polaris";
 // import { TitleBar } from "@shopify/app-bridge-react";
@@ -38,6 +36,7 @@ const imageCarousel = () => {
         >
             <div style={{marginTop: "20px",}}>
                 {/* Calling the slick slider to render carousel here */}
+                {/* Pass it the function IDs */}
                 <SlickImages />
             </div>
         </Page>
