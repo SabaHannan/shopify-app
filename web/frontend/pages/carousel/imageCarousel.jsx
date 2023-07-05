@@ -10,7 +10,7 @@ import { SlickImages } from '../../components/SlickImages';
 const imageCarousel = () => {
   // TRANSLATION
   const { t } = useTranslation();
-  
+
     return (
         <Page title={t("NavigationMenu.imageCarousel")}>
             <Layout>

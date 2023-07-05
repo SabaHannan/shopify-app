@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import useCreatePicture from '../../graphql/mutations/PictureMutation';
 import { serialiseFile } from "../../graphql/SerializeFile";
 import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
+import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
 // import { SlickImages } from '../../components/SlickImages';
 
 export default function ManageCode() {
@@ -42,6 +43,11 @@ export default function ManageCode() {
   const [carousel, setCarousel] = useState();
 
   const {createCarousel} = useCreateCarousel();
+
+  //DATABASE CAROUSEL_PICTURE
+  const [carouselPictures, setCarouselPictures] = useState([]);
+
+  const {createCarouselPicture} = useCreateCarouselPicture();
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -86,6 +92,7 @@ export default function ManageCode() {
     //Create Carousel intance in the databse first before uploading the pictures
     await makeCarousel();
     
+    //Upload pictures to the backend
     try {
         const createdPictures = [];
 
@@ -103,16 +110,15 @@ export default function ManageCode() {
             console.log("loading...")
           }
 
-          console.log(data.createPicture);
-
           createdPictures.push(data.createPicture);
+
+          //create carouselpicture intance
+          await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
 
         }
 
         setPictures(createdPictures);
-
-
-        
+ 
         pictures.forEach(pic => {
           console.log(pic);
         })
@@ -125,6 +131,34 @@ export default function ManageCode() {
     console.log("NOW WE HERE!")
   }
 
+  /**
+   * Function for sending a new CarouselPicture to the database
+   * @param {*} carID 
+   * @param {*} picID 
+   */
+  const makeCarouselPicture = async (carID, picID) => {
+    try {
+      //Create a CarousePicture instance
+      const nuCarouselPicture = {
+        carouselID: carID,
+        pictureID: picID
+      }
+
+      const { data } = await createCarouselPicture({variables: nuCarouselPicture});
+       
+      console.log(data.createCarouselPicture);
+
+      carouselPictures.push(data.createCarouselPicture);
+
+    }
+    catch(error) {
+      console.error("Something went wrong with create CarouselPicture", error);
+    }
+  } 
+
+  /**
+   * Function to create an save a new Carousel into the database
+   */
   const makeCarousel = async () => {
 
     //Create carousel instance from the title and description
@@ -138,8 +172,6 @@ export default function ManageCode() {
         carDescription: description,
         carStatus: false
       }
-
-      console.log(nuCarousel);
 
       const { data } = await createCarousel({variables: nuCarousel })
 
@@ -258,9 +290,6 @@ export default function ManageCode() {
           </div>
         </FormLayout>
       </Form>
-      <div>
-        {/* <SlickImages /> */}
-      </div>
     </Page>
   );
 }

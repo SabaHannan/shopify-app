@@ -14,7 +14,7 @@ const useCreateCarousel = () => {
         }
     `;
 
-    const [createCarousel, {loading, error}] = useMutation(CREATE_CAROUSEL_MUTATION, {client});
+    const [createCarousel] = useMutation(CREATE_CAROUSEL_MUTATION, {client});
 
     return {createCarousel};
 }
