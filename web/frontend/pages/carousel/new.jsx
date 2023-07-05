@@ -113,7 +113,9 @@ export default function ManageCode() {
           createdPictures.push(data.createPicture);
 
           //create carouselpicture intance
-          await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
+          //await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
+
+          console.log(carousel.carouselID + " : " + data.createPicture.pictureID)
 
         }
 
@@ -185,8 +187,6 @@ export default function ManageCode() {
     }
 
   }
-
-
 
   const validImageTypes = ['image/*'];
   // If the selectedFiles array is empty then display the <DropZone.FileUpload>

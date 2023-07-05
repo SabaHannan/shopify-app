@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize"
-import sequelize from "../sequelize"
+import sequelize from "../sequelize";
 
 interface carouselPictureAttributes {
     carouselID?: number,
@@ -13,10 +13,12 @@ class carouselPicture extends Model<carouselPictureAttributes> implements carous
 
 carouselPicture.init({
     carouselID: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     pictureID: {
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 },
 {

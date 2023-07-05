@@ -8,9 +8,13 @@ const carouselPictureRoute = express.Router();
 //MUTATION requests handlers
 carouselPictureRoute.post("/createCarouselPicture", async (req, res) => {
     try {
-        let nuCarPic: carouselPicture = new carouselPicture();
-
+        
         const { carouselID, pictureID } = req.body;
+
+        let nuCarPic: carouselPicture = new carouselPicture({
+            carouselID: carouselID,
+            pictureID: pictureID
+        });
 
         nuCarPic = await createCarousePicture(carouselID, pictureID);
 

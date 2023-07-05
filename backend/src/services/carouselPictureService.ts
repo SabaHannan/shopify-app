@@ -25,6 +25,6 @@ export const createCarousePicture = async (carID: number, picID: number): Promis
     }
     catch(error) {
         console.error("Failed to save new carouselPicture", error);
-        throw new Error("Failed to save new object into the database");
+        throw new Error("Failed to save new CarouselPicture object into the database");
     }
 }
