@@ -16,6 +16,10 @@
     "extends": "@shopify/stylelint-polaris"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.16",
+    "@babel/node": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
     "@formatjs/intl-locale": "^3.1.1",
     "@formatjs/intl-localematcher": "^0.2.32",
     "@formatjs/intl-pluralrules": "^5.2.2",
