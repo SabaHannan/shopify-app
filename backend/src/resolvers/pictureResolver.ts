@@ -1,5 +1,4 @@
 import picture from "../models/picture.Model";
-import { createReadStream } from "fs";
 import { createPicture, deletePicture, getPictureByID, getPictures, updatePicture } from "../services/pictureServices";
 
 //Resolver for the pictures entity

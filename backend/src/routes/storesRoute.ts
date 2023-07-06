@@ -44,7 +44,7 @@ storeRoute.post("/", async (req, res) => {
     }
     catch(error) {
         res.status(500).json({ error: "Failed to save Store to the database"});
-        console.error("Request faile", error);
+        console.error("Request failed", error);
     }
 });
 
