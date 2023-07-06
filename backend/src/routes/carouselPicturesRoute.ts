@@ -16,7 +16,7 @@ carouselPictureRoute.post("/createCarouselPicture", async (req, res) => {
             pictureID: pictureID
         });
 
-        nuCarPic = await createCarousePicture(carouselID, pictureID);
+        nuCarPic = await createCarousePicture(nuCarPic);
 
         res.status(201).json(nuCarPic);
     }

@@ -6,20 +6,22 @@ import carouselPicture from "../models/carouselPicture.Model";
  * @param picID - pictureID: INT
  * @returns CarouselPicture object
  */
-export const createCarousePicture = async (carID: number, picID: number): Promise<carouselPicture> => {
-
-    let nuCarPic: carouselPicture = new carouselPicture();
+export const createCarousePicture = async (nuCarPic: carouselPicture): Promise<carouselPicture> => {
 
     try {
         const data = {
-            carID,
-            picID
+            carouselID: nuCarPic.carouselID,
+            pictureID: nuCarPic.pictureID
         }
+
+        console.log(data);
 
         const result = await carouselPicture.create(data, {returning: true}) as carouselPicture;
 
-        nuCarPic.carouseID = result.carouseID;
-        nuCarPic.pictureID = result.pictureID;
+        nuCarPic = result;
+
+        console.log(result);
+        console.log(nuCarPic);
 
         return nuCarPic;
     }

@@ -7,7 +7,7 @@ interface carouselPictureAttributes {
 }
 
 class carouselPicture extends Model<carouselPictureAttributes> implements carouselPictureAttributes {
-    public carouseID?: number;
+    public carouselID?: number;
     public pictureID?: number; 
 }
 
@@ -25,7 +25,9 @@ carouselPicture.init({
     sequelize,
     modelName: 'carouselPicture',
     tableName: 'carouselPicture',
-    timestamps: false
+    timestamps: false,
 });
+
+carouselPicture.removeAttribute("id");
 
 export default carouselPicture;

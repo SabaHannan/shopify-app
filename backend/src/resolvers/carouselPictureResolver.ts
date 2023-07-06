@@ -5,13 +5,15 @@ import { createCarousePicture } from "../services/carouselPictureService";
 const carouselPictureResolver = {
 
     //Mutation fucntion to create a new carouselPicture
-    createPicture: async ( args: { carouselID: number, pictureID: number }): Promise<carouselPicture> => {
+    createCarouselPicture: async ( args: { carouselID: number, pictureID: number }): Promise<carouselPicture> => {
 
-        let nuCarPic: carouselPicture = new carouselPicture();
-        const { carouselID, pictureID } = args;
+        let nuCarPic: carouselPicture = new carouselPicture({
+            carouselID: args.carouselID,
+            pictureID: args.pictureID
+        });
 
         try {
-            nuCarPic = await createCarousePicture(carouselID, pictureID);
+            nuCarPic = await createCarousePicture(nuCarPic);
 
             return nuCarPic;
         }
