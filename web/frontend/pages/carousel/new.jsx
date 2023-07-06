@@ -40,7 +40,7 @@ export default function ManageCode() {
   const {createPicture, loading} = useCreatePicture();
 
   //DATABASE CAROUSEL 
-  const [carousel, setCarousel] = useState();
+  var [carousel, setCarousel] = useState();
 
   const {createCarousel} = useCreateCarousel();
 
@@ -85,9 +85,7 @@ export default function ManageCode() {
           createdPictures.push(data.createPicture);
 
           //create carouselpicture intance
-          //await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
-
-          console.log(carousel.carouselID + " : " + data.createPicture.pictureID)
+          await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
 
         }
 
@@ -98,7 +96,7 @@ export default function ManageCode() {
         })
     }
     catch(error) {
-      console.error("Something went wrong: ", error.errorMessage)
+      console.error("Something went wrong: ", error)
     }
 
     // Get image IDs of the uploaded images:
@@ -162,9 +160,7 @@ export default function ManageCode() {
 
       const { data } = await createCarousel({variables: nuCarousel })
 
-      console.log(data.createCarousel);
-      
-      setCarousel(data.createCarousel);
+      carousel = data.createCarousel;
 
     }
     catch(error) {
