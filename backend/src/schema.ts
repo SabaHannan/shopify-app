@@ -2,8 +2,6 @@ import { buildSchema } from 'graphql';
 
 //Creating a type definition instance
 const imgCarouselSchema = buildSchema(`
-    scalar Upload
-
     type store {
         storeID: Int!
         storeName: String!
@@ -54,8 +52,10 @@ const imgCarouselSchema = buildSchema(`
         deleteCarousel(carouselID: Int!): Boolean!
         
         createPicture(pictureName: String!, pictureData: String!): picture!
-        updatePicture(pictureID: Int!, pictureName: String, pictureData: Upload): picture!
+        updatePicture(pictureID: Int!, pictureName: String, pictureData: String!): picture!
         deletePicture(pictureID: Int!): Boolean!
+
+        createCarouselPicture(carouselID: Int!, pictureID: Int!): carouselPicture!
     }
 `);
 

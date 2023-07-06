@@ -9,8 +9,9 @@
   },
   "NavigationMenu": {
     "pageName": "Page name",
-    "newPage":  "New carousel",
-    "imageCarousel": "Carousel"
+    "newPage":  "My carousel",
+    "imageCarousel": "My Carousels",
+    "directions": "All your carousels in one place. Copy the embed code by clicking the icon paste it in your website."
   },
   "NotFound": {
     "description": "Check the URL and try again, or use the search bar to find what you need.",

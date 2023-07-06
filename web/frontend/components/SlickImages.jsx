@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
 
+// Function takes in an array of images
 export function SlickImages () {
 
     const settings = {
@@ -13,11 +14,12 @@ export function SlickImages () {
         autoplaySpeed: 2000,
         slidesToShow: 4,
         slidesToScroll: 2,
+        adaptiveHeight: true,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 4,
                     slidesToScroll: 3,
                     infinite: true,
                     dots: true
@@ -26,14 +28,14 @@ export function SlickImages () {
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 2
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 1.5,
                     slidesToScroll: 1
                 }
             }
@@ -44,6 +46,7 @@ export function SlickImages () {
     }
   
     return (
+        // Iterate through the images array and assign to <div>
         <Slider {...settings}>
             <div id="carouselWrapper">
                 <img src='../../assets/1.jpg' alt=''></img>

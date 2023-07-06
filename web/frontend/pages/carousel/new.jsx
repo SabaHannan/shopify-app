@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import useCreatePicture from '../../graphql/mutations/PictureMutation';
 import { serialiseFile } from "../../graphql/SerializeFile";
 import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
+import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
 // import { SlickImages } from '../../components/SlickImages';
 
 export default function ManageCode() {
@@ -39,41 +40,17 @@ export default function ManageCode() {
   const {createPicture, loading} = useCreatePicture();
 
   //DATABASE CAROUSEL 
-  const [carousel, setCarousel] = useState();
+  var [carousel, setCarousel] = useState();
 
   const {createCarousel} = useCreateCarousel();
 
+  //DATABASE CAROUSEL_PICTURE
+  const [carouselPictures, setCarouselPictures] = useState([]);
+
+  const {createCarouselPicture} = useCreateCarouselPicture();
+
   // DROPZONE CHANGE
   const handleDrop = (files) => {
-
-    // CODE TO UPLOAD FILE AND CHECK IF IT WAS SUCCESSFULL
-
-    // try {
-    //   // Simulate image upload request
-    //   const uploadPromises = files.map((file) =>
-    //     axios.post('https://example.com/upload', file)
-    //   );
-
-    //   // Wait for all upload requests to finish
-    //   const responses = await Promise.all(uploadPromises);
-
-    //   // Check for any failed uploads
-    //   const failedUploads = responses.filter((response) => response.status !== 200);
-
-    //   if (failedUploads.length > 0) {
-    //     // Image upload failed
-    //     setErrorMessage('Failed to upload some images. Please try again.');
-    //   } else {
-    //     // Image upload successful
-    //     setUploadedFiles((prevFiles) => [...prevFiles, ...files]);
-    //     setErrorMessage(null);
-    //   }
-    // } catch (error) {
-    //   // Error occurred during upload
-    //   setErrorMessage('Failed to upload images. Please try again.');
-    // }
-
-
     setSelectedFiles(files);
     // If there is an error, set the error state
     setErrorMessage('There was an error uploading the image.');
@@ -82,10 +59,12 @@ export default function ManageCode() {
   // HANDLE FORM SUBMISSION
   const handleSubmit = async () => {
     console.log("SAVING IMAGES!")
+    const uploadedImageIDs = [];
 
     //Create Carousel intance in the databse first before uploading the pictures
     await makeCarousel();
     
+    //Upload pictures to the backend
     try {
         const createdPictures = [];
 
@@ -103,28 +82,68 @@ export default function ManageCode() {
             console.log("loading...")
           }
 
-          console.log(data.createPicture);
-
           createdPictures.push(data.createPicture);
+
+          //create carouselpicture intance
+          await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
 
         }
 
         setPictures(createdPictures);
-
-
-        
+ 
         pictures.forEach(pic => {
           console.log(pic);
         })
     }
     catch(error) {
-      console.error("Something went wrong: ", error.errorMessage)
+      console.error("Something went wrong: ", error)
     }
 
+    // Get image IDs of the uploaded images:
+    pictures.forEach(pic => {
+      uploadedImageIDs.push({id : pic._id})
+    })
+
+    // Check if the array is working
+    uploadedImageIDs.forEach(item => {
+      console.log('Item-ID: ' + item.id);
+    });
+
+    
+    // Needs to be a page
+    // Pass it an array of image IDs
     navigate('/carousel/imageCarousel');
     console.log("NOW WE HERE!")
   }
 
+  /**
+   * Function for sending a new CarouselPicture to the database
+   * @param {*} carID 
+   * @param {*} picID 
+   */
+  const makeCarouselPicture = async (carID, picID) => {
+    try {
+      //Create a CarousePicture instance
+      const nuCarouselPicture = {
+        carouselID: carID,
+        pictureID: picID
+      }
+
+      const { data } = await createCarouselPicture({variables: nuCarouselPicture});
+       
+      console.log(data.createCarouselPicture);
+
+      carouselPictures.push(data.createCarouselPicture);
+
+    }
+    catch(error) {
+      console.error("Something went wrong with create CarouselPicture", error);
+    }
+  } 
+
+  /**
+   * Function to create an save a new Carousel into the database
+   */
   const makeCarousel = async () => {
 
     //Create carousel instance from the title and description
@@ -139,13 +158,9 @@ export default function ManageCode() {
         carStatus: false
       }
 
-      console.log(nuCarousel);
-
       const { data } = await createCarousel({variables: nuCarousel })
 
-      console.log(data.createCarousel);
-      
-      setCarousel(data.createCarousel);
+      carousel = data.createCarousel;
 
     }
     catch(error) {
@@ -153,8 +168,6 @@ export default function ManageCode() {
     }
 
   }
-
-
 
   const validImageTypes = ['image/*'];
   // If the selectedFiles array is empty then display the <DropZone.FileUpload>
@@ -207,10 +220,9 @@ export default function ManageCode() {
         </Layout.Section>
       </Layout>
 
-      {/* TITLE OF THE IMAGE CAROUSEL */}
       <Form>
         <FormLayout>
-          
+          {/* TITLE OF THE IMAGE CAROUSEL */}
           <div>
             <TextField
               label="Title"
@@ -221,7 +233,7 @@ export default function ManageCode() {
               autoComplete='off'
             />
           </div>
-
+          {/* DESCRIPTION OF THE IMAGE CAROUSEL */}
           <div>
             <TextField
               label="Description"
@@ -243,24 +255,10 @@ export default function ManageCode() {
             >
               {renderThumbnails}
               {fileUpload}
-              {/* <DropZone.FileUpload 
-                actionTitle="Add files"
-                actionHint="or drag and drop"
-              />
-              {selectedFiles.length > 0 && (
-                <DropZone.FileUpload.ThumbnailDetails
-                  title={`${selectedFiles.length} ${selectedFiles.length > 1 ? 'files' : 'file'} selected`}
-                >
-                  
-                </DropZone.FileUpload.ThumbnailDetails>
-              )} */}
             </DropZone>
           </div>
         </FormLayout>
       </Form>
-      <div>
-        {/* <SlickImages /> */}
-      </div>
     </Page>
   );
 }
