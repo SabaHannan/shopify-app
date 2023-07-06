@@ -82,8 +82,6 @@ export default function ManageCode() {
         }
 
         setPictures(createdPictures);
-
-
         
         pictures.forEach(pic => {
           console.log(pic);
@@ -93,20 +91,22 @@ export default function ManageCode() {
       console.error("Something went wrong: ", error.errorMessage)
     }
 
-    // Get image IDs of the uploaded images:
-    pictures.forEach(pic => {
-      uploadedImageIDs.push({id : pic._id})
-    })
+    // // Get image IDs of the uploaded images:
+    // pictures.forEach(pic => {
+    //   uploadedImageIDs.push({id : pic._id})
+    // })
 
-    // Check if the array is working
-    uploadedImageIDs.forEach(item => {
-      console.log('Item-ID: ' + item.id);
-    });
+    // // Check if the array is working
+    // uploadedImageIDs.forEach(item => {
+    //   console.log('Item-ID: ' + item.id);
+    // });
 
-    
-    // Needs to be a page
-    // Pass it an array of image IDs
-    navigate('/carousel/imageCarousel');
+    // Pass it useState of jSON objects
+    const encodedImages = encodeURIComponent(JSON.stringify(pictures));
+
+
+    // Sending the string array of image objects
+    navigate('/carousel/imageCarousel?pictures='+encodedImages);
     console.log("NOW WE HERE!")
   }
 
