@@ -4,8 +4,16 @@ import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
 
-// Function takes in an array of images
-export function SlickImages () {
+// Function takes in an array of image objects
+export function SlickImages ({ images }) {
+
+    console.log('pic:' + images);
+
+    // 1. Loop through the image object array
+
+    // 2. Get the pictureData
+    // 3. Deserialize it
+    // 4. Set it in the slider
 
     const settings = {
         dots: true,
@@ -48,39 +56,11 @@ export function SlickImages () {
     return (
         // Iterate through the images array and assign to <div>
         <Slider {...settings}>
-            <div id="carouselWrapper">
-                <img src='../../assets/1.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/2.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/3.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/4.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/5.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/6.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/7.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/8.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/9.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/10.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/11.jpg' alt=''></img>
-            </div>
+            {images.map((image, index) => (
+                <div id="carouselWrapper" key={index}>
+                    <img src={image} alt="" />
+                </div>
+            ))}
         </Slider>
     );
 }
