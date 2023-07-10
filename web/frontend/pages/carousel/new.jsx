@@ -20,6 +20,7 @@ import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
 import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
 // DATABASE IMAGES ARRAY
 export var pictures = [];
+export var imageFiles = [];
 
 export default function ManageCode() {
   // TRANSLATION
@@ -50,6 +51,9 @@ export default function ManageCode() {
   // DROPZONE CHANGE
   const handleDrop = (files) => {
     setSelectedFiles(files);
+    files.forEach(f => {
+      imageFiles.push(f);
+    })
     
   };
  

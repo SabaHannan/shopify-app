@@ -1,5 +1,6 @@
 import 'slick-carousel';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+// import React from 'react';
 import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
@@ -7,35 +8,23 @@ import '../slick-carousel/slick-theme.css';
 // Function takes in an array of image objects
 export function SlickImages ({ imageObj }) {
 
-    // 1. Loop through the image object array
-    /**
-     * Helper function to extract pictureData from image object array
-     * @param {*} imageObj 
-     * @returns array of pictureData
-     */
-    function getImageData(imageObj) {
-        let imageData = [];
-        imageObj.forEach(image => {
-            // 2. Get the pictureData
-            const picData = image.pictureData;
-            imageData.push(picData);
-        });
-        // return pictureData as array
-        return imageData;
-    }
+    imageObj.forEach(f => {
+        console.log('files: ' + f);
+    });
 
-    // 3. Deserialize it
-    function deserializeImages(imagesDataArray){
-        let imageArray = [];
-        // Deserialize and save in temp variable
-        imagesDataArray.forEach(pictureData => {
-            imageArray.push(atob(pictureData));
-        })
-        // return images in an array
-        return imageArray;
-    }
+    const [imageUrls, setImageUrls] = useState([]);
 
-    // 4. Set it in the slider
+    useEffect(() => {
+        const loadImageUrls = async () => {
+            const urls = await Promise.all(
+                imageObj.map((image) => createImageFromObjectUrl(image))
+            );
+            setImageUrls(urls);
+        };
+
+        loadImageUrls();
+  }, [imageObj]);
+
 
     const settings = {
         dots: true,
@@ -78,11 +67,24 @@ export function SlickImages ({ imageObj }) {
     return (
         // Iterate through the images array and assign to <div>
         <Slider {...settings}>
-            {/* {data.map((image, index) => (
+            {imageUrls.map((image, index) => (
                 <div id="carouselWrapper" key={index}>
                     <img src={image} alt="" />
                 </div>
-            ))} */}
+            ))}
         </Slider>
     );
 }
+
+async function createImageFromObjectUrl(fileObject) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        const imageUrl = reader.result;
+        resolve(imageUrl);
+      };
+  
+      reader.readAsDataURL(fileObject);
+    });
+  }
