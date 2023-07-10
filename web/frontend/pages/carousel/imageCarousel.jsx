@@ -39,7 +39,7 @@ const imageCarousel = () => {
             <div style={{marginTop: "20px",}}>
                 {/* Calling the slick slider to render carousel here */}
                 {/* Passing the pictures array as prop to the component */}
-                <SlickImages images={pictures}/>
+                <SlickImages imageObj={pictures}/>
             </div>
         </Page>
     );

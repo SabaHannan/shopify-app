@@ -5,14 +5,36 @@ import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
 
 // Function takes in an array of image objects
-export function SlickImages ({ images }) {
-
-    console.log('pic:' + images);
+export function SlickImages ({ imageObj }) {
 
     // 1. Loop through the image object array
+    /**
+     * Helper function to extract pictureData from image object array
+     * @param {*} imageObj 
+     * @returns array of pictureData
+     */
+    function getImageData(imageObj) {
+        let imageData = [];
+        imageObj.forEach(image => {
+            // 2. Get the pictureData
+            const picData = image.pictureData;
+            imageData.push(picData);
+        });
+        // return pictureData as array
+        return imageData;
+    }
 
-    // 2. Get the pictureData
     // 3. Deserialize it
+    function deserializeImages(imagesDataArray){
+        let imageArray = [];
+        // Deserialize and save in temp variable
+        imagesDataArray.forEach(pictureData => {
+            imageArray.push(atob(pictureData));
+        })
+        // return images in an array
+        return imageArray;
+    }
+
     // 4. Set it in the slider
 
     const settings = {
@@ -56,11 +78,11 @@ export function SlickImages ({ images }) {
     return (
         // Iterate through the images array and assign to <div>
         <Slider {...settings}>
-            {images.map((image, index) => (
+            {/* {data.map((image, index) => (
                 <div id="carouselWrapper" key={index}>
                     <img src={image} alt="" />
                 </div>
-            ))}
+            ))} */}
         </Slider>
     );
 }
