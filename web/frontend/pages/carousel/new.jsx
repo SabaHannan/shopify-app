@@ -18,7 +18,9 @@ import useCreatePicture from '../../graphql/mutations/PictureMutation';
 import { serialiseFile } from "../../graphql/SerializeFile";
 import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
 import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
-// import { SlickImages } from '../../components/SlickImages';
+// DATABASE IMAGES ARRAY
+export var pictures = [];
+export var imageFiles = [];
 
 export default function ManageCode() {
   // TRANSLATION
@@ -33,9 +35,6 @@ export default function ManageCode() {
   const [description, setDescription] = useState();
   // TO ROUTE TO A DIFFERENT PAGE IN APP
   const navigate = useNavigate();
-
-  // DATABASE IMAGES
-  const [pictures, setPictures] = useState([]);
 
   const {createPicture, loading} = useCreatePicture();
 
@@ -52,14 +51,15 @@ export default function ManageCode() {
   // DROPZONE CHANGE
   const handleDrop = (files) => {
     setSelectedFiles(files);
-    // If there is an error, set the error state
-    setErrorMessage('There was an error uploading the image.');
+    files.forEach(f => {
+      imageFiles.push(f);
+    })
+    
   };
  
   // HANDLE FORM SUBMISSION
   const handleSubmit = async () => {
     console.log("SAVING IMAGES!")
-    const uploadedImageIDs = [];
 
     //Create Carousel intance in the databse first before uploading the pictures
     await makeCarousel();
@@ -89,29 +89,19 @@ export default function ManageCode() {
 
         }
 
-        setPictures(createdPictures);
+        pictures = createdPictures;
  
         pictures.forEach(pic => {
           console.log(pic);
         })
     }
     catch(error) {
-      console.error("Something went wrong: ", error)
+      // If there is an error, set the error state
+      setErrorMessage('There was an error uploading the image.');
+      console.error("Something went very wrong Stephen: ", error)
     }
 
-    // Get image IDs of the uploaded images:
-    pictures.forEach(pic => {
-      uploadedImageIDs.push({id : pic._id})
-    })
-
-    // Check if the array is working
-    uploadedImageIDs.forEach(item => {
-      console.log('Item-ID: ' + item.id);
-    });
-
-    
-    // Needs to be a page
-    // Pass it an array of image IDs
+    // Navigating to the next page
     navigate('/carousel/imageCarousel');
     console.log("NOW WE HERE!")
   }
@@ -247,7 +237,7 @@ export default function ManageCode() {
         
           {/* IMAGE UPLOADING */}
           <div>
-            <Text>upload Carousel Images</Text>
+            <Text>Upload Carousel Images</Text>
             <DropZone
               accept="image/*"
               dropOnPage
