@@ -1,11 +1,30 @@
 import 'slick-carousel';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+// import React from 'react';
 import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
 
-// Function takes in an array of images
-export function SlickImages () {
+// Function takes in an array of image objects
+export function SlickImages ({ imageObj }) {
+
+    imageObj.forEach(f => {
+        console.log('files: ' + f);
+    });
+
+    const [imageUrls, setImageUrls] = useState([]);
+
+    useEffect(() => {
+        const loadImageUrls = async () => {
+            const urls = await Promise.all(
+                imageObj.map((image) => createImageFromObjectUrl(image))
+            );
+            setImageUrls(urls);
+        };
+
+        loadImageUrls();
+  }, [imageObj]);
+
 
     const settings = {
         dots: true,
@@ -48,39 +67,24 @@ export function SlickImages () {
     return (
         // Iterate through the images array and assign to <div>
         <Slider {...settings}>
-            <div id="carouselWrapper">
-                <img src='../../assets/1.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/2.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/3.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/4.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/5.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/6.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/7.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/8.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/9.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/10.jpg' alt=''></img>
-            </div>
-            <div id="carouselWrapper">
-                <img src='../../assets/11.jpg' alt=''></img>
-            </div>
+            {imageUrls.map((image, index) => (
+                <div id="carouselWrapper" key={index}>
+                    <img src={image} alt="" />
+                </div>
+            ))}
         </Slider>
     );
 }
+
+async function createImageFromObjectUrl(fileObject) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+  
+      reader.onloadend = () => {
+        const imageUrl = reader.result;
+        resolve(imageUrl);
+      };
+  
+      reader.readAsDataURL(fileObject);
+    });
+  }
