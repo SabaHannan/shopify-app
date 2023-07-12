@@ -1,0 +1,11 @@
+{
+  "name": "image-carousel-theme-app-ext",
+  "version": "1.0.0",
+  "description": "packages json for theme-app extensions",
+  "main": "index.js",
+  "scripts": {
+    "test": "dev"
+  },
+  "author": "",
+  "license": "ISC"
+}
