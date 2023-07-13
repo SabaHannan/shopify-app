@@ -1,0 +1,78 @@
+<p style="color:black;">Hello world</p>
+
+{% schema %}
+  {
+    "name": "Image carousel",
+    "target": "section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "autoplay",
+        "default": false,
+        "label": "Autoplay"
+      },
+      {
+        "type": "range",
+        "id": "autoplay_speed",
+        "min": 0,
+        "max": 10,
+        "step": 1,
+        "unit": "sec",
+        "label": "Autoplay speed in seconds",
+        "default": 5
+      },
+      {
+        "type": "checkbox",
+        "id": "infinite",
+        "default": true,
+        "label": "Infinite"
+      },
+      {
+        "type": "checkbox",
+        "id": "pause_on_hover",
+        "default": true,
+        "label": "Pause on hover"
+      }, {
+        "type": "select",
+        "id": "slides_to_show",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          }, {
+            "value": "2",
+            "label": "2"
+          }, {
+            "value": "3",
+            "label": "3"
+          }, {
+            "value": "4",
+            "label": "4"
+          }
+        ],
+        "default": "3",
+        "label": "3"
+      }, {
+        "type": "header",
+        "content": "Responsive"
+      }, {
+        "type": "select",
+        "id": "mobile_slides",
+        "options": [
+          {
+            "value": "1",
+            "label": "1"
+          }, {
+            "value": "2",
+            "label": "2"
+          }, {
+            "value": "3",
+            "label": "3"
+          }
+        ],
+        "default": "2",
+        "label": "2"
+      }
+    ]
+  }
+{% endschema %}
