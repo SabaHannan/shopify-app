@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+// 2nd PAGE - Create a carousel
+import React, { useState, useCallback } from 'react';
 import {
   Page,
   Layout,
@@ -9,6 +10,7 @@ import {
   DropZone,
   Form,
   Thumbnail,
+  Select,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
@@ -35,18 +37,15 @@ export default function ManageCode() {
   const [description, setDescription] = useState();
   // TO ROUTE TO A DIFFERENT PAGE IN APP
   const navigate = useNavigate();
-
   const {createPicture, loading} = useCreatePicture();
-
   //DATABASE CAROUSEL 
   var [carousel, setCarousel] = useState();
-
   const {createCarousel} = useCreateCarousel();
-
   //DATABASE CAROUSEL_PICTURE
   const [carouselPictures, setCarouselPictures] = useState([]);
-
   const {createCarouselPicture} = useCreateCarouselPicture();
+  // SLIDER SETTINGS
+  const [selected, setSelected] = useState('');
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -61,7 +60,7 @@ export default function ManageCode() {
   const handleSubmit = async () => {
     console.log("SAVING IMAGES!")
 
-    //Create Carousel intance in the databse first before uploading the pictures
+    //Create Carousel intansce in the database first before uploading the pictures
     await makeCarousel();
     
     //Upload pictures to the backend
@@ -192,6 +191,12 @@ export default function ManageCode() {
   // HANDLE FORM CHANGES 
   const handleFormTitleChange = (value) => setTitle(value);
   const handleFormDescriptionChange = (value) => setDescription(value);
+  // Handle settings selection
+  const handleSelectChange = useCallback(
+    (value) => setSelected(value),
+    [],
+  );
+
 
   return (
     <Page>
@@ -219,7 +224,7 @@ export default function ManageCode() {
               type="text"
               onChange={handleFormTitleChange}
               value={title}
-              helpText="enter the Title of the carousel"
+              helpText="Title of the carousel"
               autoComplete='off'
             />
           </div>
@@ -247,8 +252,26 @@ export default function ManageCode() {
               {fileUpload}
             </DropZone>
           </div>
+          {/* FORM LAYOUT FOR SETTINGS AND AUTOPLAY SPEED SELECTORS */}
+          <div>
+            <Select
+              label="Autoplay"
+              options={['True', 'False']}
+              value={selected}
+              onChange={handleSelectChange}
+            />
+          </div>
+          <div>
+            <Select
+              label="Autoplay Speed"
+              helpText="Speed in miliseconds"
+              options={['1000', '2000', '3000', '4000']}
+              value={selected}
+              onChange={handleSelectChange}
+            />
+          </div>
         </FormLayout>
-      </Form>
+        </Form>
     </Page>
   );
 }
