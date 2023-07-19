@@ -6,7 +6,15 @@ interface carouselAttributes {
     storeID?: number, 
     carouselName?: string,
     description?: string,
-    activeStatus?: Boolean
+    activeStatus?: Boolean,
+    autoplay?: Boolean,
+    autoplaySpeed?: number,
+    arrows?: Boolean,
+    dots?: Boolean,
+    infinite?: Boolean,
+    pauseOnHover?: Boolean,
+    slideToShow?: number,
+    slidesToScroll?: number
 }
 
 class carousel extends Model<carouselAttributes> implements carouselAttributes {
@@ -14,7 +22,15 @@ class carousel extends Model<carouselAttributes> implements carouselAttributes {
     public storeID?: number; 
     public carouselName?: string;
     public description?: string;
-    public activeStatus?: Boolean
+    public activeStatus?: Boolean;
+    public autoplay?: Boolean;
+    public autoplaySpeed?: number;
+    public arrows?: Boolean;
+    public dots?: Boolean;
+    public infinite?: Boolean;
+    public pauseOnHover?: Boolean;
+    public slideToShow?: number;
+    public slidesToScroll?: number;
 }
 
 carousel.init({
@@ -37,8 +53,42 @@ carousel.init({
     },
     activeStatus: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: false,
+    },
+    autoplay: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    autoplaySpeed: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    arrows: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    dots: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    infinite: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    pauseOnHover: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
+    slideToShow: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     }
+    ,
+    slidesToScroll: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    }
+
 },
 {
     sequelize,
