@@ -1,5 +1,5 @@
 // 2nd PAGE - Create a carousel
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import {
   Page,
   Layout,
@@ -10,7 +10,6 @@ import {
   DropZone,
   Form,
   Thumbnail,
-  Select,
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
@@ -44,8 +43,6 @@ export default function ManageCode() {
   //DATABASE CAROUSEL_PICTURE
   const [carouselPictures, setCarouselPictures] = useState([]);
   const {createCarouselPicture} = useCreateCarouselPicture();
-  // SLIDER SETTINGS
-  const [selected, setSelected] = useState('');
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -101,7 +98,7 @@ export default function ManageCode() {
     }
 
     // Navigating to the next page
-    navigate('/carousel/imageCarousel');
+    navigate('/carousel/settings');
     console.log("NOW WE HERE!")
   }
 
@@ -191,18 +188,12 @@ export default function ManageCode() {
   // HANDLE FORM CHANGES 
   const handleFormTitleChange = (value) => setTitle(value);
   const handleFormDescriptionChange = (value) => setDescription(value);
-  // Handle settings selection
-  const handleSelectChange = useCallback(
-    (value) => setSelected(value),
-    [],
-  );
-
 
   return (
     <Page>
       <TitleBar title={t("HomePage.title")} 
       primaryAction={{
-        content: "Save",
+        content: "Next",
         onAction: handleSubmit
         }}   
       />
@@ -251,24 +242,6 @@ export default function ManageCode() {
               {renderThumbnails}
               {fileUpload}
             </DropZone>
-          </div>
-          {/* FORM LAYOUT FOR SETTINGS AND AUTOPLAY SPEED SELECTORS */}
-          <div>
-            <Select
-              label="Autoplay"
-              options={['True', 'False']}
-              value={selected}
-              onChange={handleSelectChange}
-            />
-          </div>
-          <div>
-            <Select
-              label="Autoplay Speed"
-              helpText="Speed in miliseconds"
-              options={['1000', '2000', '3000', '4000']}
-              value={selected}
-              onChange={handleSelectChange}
-            />
           </div>
         </FormLayout>
         </Form>
