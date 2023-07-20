@@ -8,14 +8,20 @@ import {
     Text,
     LegacyStack,
 } from "@shopify/polaris";
+import { TitleBar } from "@shopify/app-bridge-react";
+import { useTranslation } from "react-i18next";
 // Importing the entire recently saved carousel
 import { carousel } from './new';
 import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
 
 export default function CarouselSettings() {
 
+    // TRANSLATION
+    const { t } = useTranslation();
     // UPDATE FUNCTION
     const { updateCarousel } = useUpdateCarousel();
+
+    console.log("carousel: ", carousel);
 
     // SLIDER SETTINGS
     const [arrows, setArrows] = useState(false);
@@ -73,17 +79,22 @@ export default function CarouselSettings() {
 
             // Update an existing carousel using id
             const editCarousel = {
-                carouselID : carousel.carouselID,
-                autoplay : autoplay, 
-                autoplaySpeed : autoplaySpeed, 
-                arrows : arrows,
-                dots : dots,
-                infinite : infinte,
-                pauseOnHover : pauseOnHover, 
-                slideToShow : slidesToShow,
-                slidesToScroll : slidesToScroll
+                
+                carouselID: carousel.carouselID,
+                carouselName : carousel.carouselName, 
+                description : carousel.description,
+                activeStatus : carousel.activeStatus,
+                autoplay: autoplay,
+                autoplaySpeed: autoplaySpeed,
+                arrows: arrows,
+                dots: dots,
+                infinite: infinte,
+                pauseOnHover: pauseOnHover,
+                slideToShow: slidesToShow,
+                slidesToScroll: slidesToScroll
             }
 
+            console.log('1');
             const { data } = await updateCarousel({ variables: editCarousel })
             console.log('Data: ', data);
 
@@ -93,11 +104,22 @@ export default function CarouselSettings() {
         }
     }
 
+    const handleSave = () => {
+        console.log("Clicked save");
+        editCarousel();
+    }
+
     return (
         <Page>
 
             <Form>
                 <FormLayout>
+                    <TitleBar title={t("HomePage.title")}
+                        primaryAction={{
+                            content: "Save",
+                            onAction: handleSave
+                        }}
+                    />
                     <LegacyStack vertical>
                         <Text variant="heading2xl" as="h3">
                             Select your settings for the image carousel

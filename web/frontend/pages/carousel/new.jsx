@@ -20,9 +20,9 @@ import { serialiseFile } from "../../graphql/SerializeFile";
 import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
 import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
 // DATABASE IMAGES ARRAY
-export var pictures = [];
+var pictures = [];
 export var imageFiles = [];
-export var carousel;
+export var carousel = {};
 
 export default function ManageCode() {
   // TRANSLATION
@@ -37,13 +37,13 @@ export default function ManageCode() {
   const [description, setDescription] = useState();
   // TO ROUTE TO A DIFFERENT PAGE IN APP
   const navigate = useNavigate();
-  const {createPicture, loading} = useCreatePicture();
+  const { createPicture, loading } = useCreatePicture();
   //DATABASE CAROUSEL 
   // var [carousel, setCarousel] = useState();
-  const {createCarousel} = useCreateCarousel();
+  const { createCarousel } = useCreateCarousel();
   //DATABASE CAROUSEL_PICTURE
   const [carouselPictures, setCarouselPictures] = useState([]);
-  const {createCarouselPicture} = useCreateCarouselPicture();
+  const { createCarouselPicture } = useCreateCarouselPicture();
 
   // DROPZONE CHANGE
   const handleDrop = (files) => {
@@ -51,56 +51,56 @@ export default function ManageCode() {
     files.forEach(f => {
       imageFiles.push(f);
     })
-    
+
   };
- 
+
   // HANDLE FORM SUBMISSION
   const handleSubmit = async () => {
     console.log("SAVING IMAGES!")
 
     //Create Carousel intansce in the database first before uploading the pictures
     await makeCarousel();
-    
+
     //Upload pictures to the backend
     try {
-        const createdPictures = [];
+      const createdPictures = [];
 
-        for(const file of selectedFiles) {
-          const binData = await serialiseFile(file);
+      for (const file of selectedFiles) {
+        const binData = await serialiseFile(file);
 
-          const nuPic = {
-            picName: file.name,
-            picData: binData
-          }
-
-          const { data } = await createPicture({variables: nuPic});
-
-          if(loading) {
-            console.log("loading...")
-          }
-
-          createdPictures.push(data.createPicture);
-
-          //create carouselpicture intance
-          await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
-
+        const nuPic = {
+          picName: file.name,
+          picData: binData
         }
 
-        pictures = createdPictures;
- 
-        pictures.forEach(pic => {
-          console.log(pic);
-        })
+        const { data } = await createPicture({ variables: nuPic });
+
+        if (loading) {
+          console.log("loading...")
+        }
+
+        createdPictures.push(data.createPicture);
+
+        //create carouselpicture intance
+        await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
+
+      }
+
+      pictures = createdPictures;
+
+      pictures.forEach(pic => {
+        console.log(pic);
+      })
     }
-    catch(error) {
+    catch (error) {
       // If there is an error, set the error state
       setErrorMessage('There was an error uploading the image.');
       console.error("Something went very wrong Stephen: ", error)
     }
 
     // Navigating to the next page
-    navigate('/carousel/CarouselSettings');
     console.log("NOW WE HERE!")
+    navigate('/carousel/CarouselSettings');
   }
 
   /**
@@ -116,17 +116,17 @@ export default function ManageCode() {
         pictureID: picID
       }
 
-      const { data } = await createCarouselPicture({variables: nuCarouselPicture});
-       
+      const { data } = await createCarouselPicture({ variables: nuCarouselPicture });
+
       console.log(data.createCarouselPicture);
 
       carouselPictures.push(data.createCarouselPicture);
 
     }
-    catch(error) {
+    catch (error) {
       console.error("Something went wrong with create CarouselPicture", error);
     }
-  } 
+  }
 
   /**
    * Function to create and save a new Carousel into the database
@@ -135,9 +135,9 @@ export default function ManageCode() {
 
     //Create carousel instance from the title and description
     console.log("CREATING CAROUSEL");
-    
+
     try {
-      
+
       const nuCarousel = {
         storeID: 4,
         carName: title,
@@ -145,13 +145,13 @@ export default function ManageCode() {
         carStatus: false
       }
 
-      const { data } = await createCarousel({variables: nuCarousel })
+      const { data } = await createCarousel({ variables: nuCarousel })
 
       // Getting the created carousel
       carousel = data.createCarousel;
 
     }
-    catch(error) {
+    catch (error) {
       console.error("Something went wrong: ", error)
     }
 
@@ -170,10 +170,10 @@ export default function ManageCode() {
             size="small"
             alt={file.name}
             source={
-            validImageTypes.includes(file.type)
-              // If statement to either render the actual file preview or NoteMinor icon
-              ? URL.createObjectURL(file)
-              : NoteMinor
+              validImageTypes.includes(file.type)
+                // If statement to either render the actual file preview or NoteMinor icon
+                ? URL.createObjectURL(file)
+                : NoteMinor
             }
           />
           {/*console.log("URL: " + URL.createObjectURL(file))*/}
@@ -193,17 +193,18 @@ export default function ManageCode() {
 
   return (
     <Page>
-      <TitleBar title={t("HomePage.title")} 
-      primaryAction={{
-        content: "Next",
-        onAction: handleSubmit
-        }}   
-      />
+      
       <Layout>
+      <TitleBar title={t("HomePage.title")}
+        primaryAction={{
+          content: "Next",
+          onAction: handleSubmit
+        }}
+      />
         <Layout.Section>
           {/* ERROR MESSAGE */}
           {errorMessage && (
-              <Banner status="critical">{errorMessage}</Banner>
+            <Banner status="critical">{errorMessage}</Banner>
           )}
         </Layout.Section>
       </Layout>
@@ -232,7 +233,7 @@ export default function ManageCode() {
               autoComplete='off'
             />
           </div>
-        
+
           {/* IMAGE UPLOADING */}
           <div>
             <Text>Upload Carousel Images</Text>
@@ -246,7 +247,7 @@ export default function ManageCode() {
             </DropZone>
           </div>
         </FormLayout>
-        </Form>
+      </Form>
     </Page>
   );
 }
