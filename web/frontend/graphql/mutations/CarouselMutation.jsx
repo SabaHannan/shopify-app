@@ -52,7 +52,7 @@ export const useUpdateCarousel = () => {
         }
     `;
 
-    const [updateCarousel] = useUpdateCarousel(UPDATE_CAROUSEL_MUTATION, {client});
+    const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, {client});
 
     return {updateCarousel};
 };
