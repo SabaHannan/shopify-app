@@ -22,6 +22,7 @@ import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMua
 // DATABASE IMAGES ARRAY
 export var pictures = [];
 export var imageFiles = [];
+export var carousel;
 
 export default function ManageCode() {
   // TRANSLATION
@@ -38,7 +39,7 @@ export default function ManageCode() {
   const navigate = useNavigate();
   const {createPicture, loading} = useCreatePicture();
   //DATABASE CAROUSEL 
-  var [carousel, setCarousel] = useState();
+  // var [carousel, setCarousel] = useState();
   const {createCarousel} = useCreateCarousel();
   //DATABASE CAROUSEL_PICTURE
   const [carouselPictures, setCarouselPictures] = useState([]);
@@ -98,7 +99,7 @@ export default function ManageCode() {
     }
 
     // Navigating to the next page
-    navigate('/carousel/settings');
+    navigate('/carousel/CarouselSettings');
     console.log("NOW WE HERE!")
   }
 
@@ -128,7 +129,7 @@ export default function ManageCode() {
   } 
 
   /**
-   * Function to create an save a new Carousel into the database
+   * Function to create and save a new Carousel into the database
    */
   const makeCarousel = async () => {
 
@@ -146,6 +147,7 @@ export default function ManageCode() {
 
       const { data } = await createCarousel({variables: nuCarousel })
 
+      // Getting the created carousel
       carousel = data.createCarousel;
 
     }
@@ -153,7 +155,7 @@ export default function ManageCode() {
       console.error("Something went wrong: ", error)
     }
 
-  }
+  } // End makeCarousel
 
   const validImageTypes = ['image/*'];
   // If the selectedFiles array is empty then display the <DropZone.FileUpload>

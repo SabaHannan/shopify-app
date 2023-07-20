@@ -7,10 +7,15 @@ import {
     Checkbox,
     Text,
     LegacyStack,
-    Layout,
 } from "@shopify/polaris";
+// Importing the entire recently saved carousel
+import { carousel } from './new';
+import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
 
 export default function CarouselSettings() {
+
+    // UPDATE FUNCTION
+    const { updateCarousel } = useUpdateCarousel();
 
     // SLIDER SETTINGS
     const [arrows, setArrows] = useState(false);
@@ -58,6 +63,35 @@ export default function CarouselSettings() {
         (value) => setSlidestoScroll(value),
         [],
     );
+
+    /**
+     * Function updates the carousel with new settings
+     */
+    const editCarousel = async () => {
+        console.log('Updating carousel');
+        try {
+
+            // Update an existing carousel using id
+            const editCarousel = {
+                carouselID : carousel.carouselID,
+                autoplay : autoplay, 
+                autoplaySpeed : autoplaySpeed, 
+                arrows : arrows,
+                dots : dots,
+                infinite : infinte,
+                pauseOnHover : pauseOnHover, 
+                slideToShow : slidesToShow,
+                slidesToScroll : slidesToScroll
+            }
+
+            const { data } = await updateCarousel({ variables: editCarousel })
+            console.log('Data: ', data);
+
+        }
+        catch (error) {
+            console.error("Something went wrong while updating: ", error)
+        }
+    }
 
     return (
         <Page>

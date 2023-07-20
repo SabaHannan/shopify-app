@@ -5,7 +5,7 @@ import client from "../GraphServer";
  * Mutation function to create a new Carousel object in the database
  * @returns - Carousel with ID
  */
-export const useCreateCarousel = () => {
+export default function useCreateCarousel()  {
     const CREATE_CAROUSEL_MUTATION = gql`
         mutation createCarousel($storeID: Int!, $carName: String!, $carDescription: String!, $carStatus: Boolean!) {
             createCarousel(storeID: $storeID, carouselName: $carName, description: $carDescription, activeStatus: $carStatus) {
@@ -13,15 +13,7 @@ export const useCreateCarousel = () => {
                 storeID
                 carouselName
                 description
-                activeStatus,
-                autoplay, 
-                autoplaySpeed, 
-                arrows,
-                dots,
-                infinite,
-                pauseOnHover, 
-                slideToShow,
-                slidesToScroll
+                activeStatus
             }
         }
     `;
@@ -52,7 +44,7 @@ export const useUpdateCarousel = () => {
         }
     `;
 
-    const [updateCarousel] = useUpdateCarousel(UPDATE_CAROUSEL_MUTATION, {client});
+    const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, {client});
 
     return {updateCarousel};
 };
