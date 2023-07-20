@@ -5,7 +5,7 @@ import client from "../GraphServer";
  * Mutation function to create a new Carousel object in the database
  * @returns - Carousel with ID
  */
-export const useCreateCarousel = () => {
+export default function useCreateCarousel() {
   const CREATE_CAROUSEL_MUTATION = gql`
     mutation createCarousel(
       $storeID: Int!
@@ -57,8 +57,6 @@ export const useUpdateCarousel = () => {
       $slideToShow: Int
       $slidesToScroll: Int
     ) {
-      mutation
-      UpdateCarousel {
         updateCarousel(
           carouselID: $carouselID
           carouselName: $carouselName
@@ -88,7 +86,6 @@ export const useUpdateCarousel = () => {
           slidesToScroll
         }
       }
-    }
   `;
 
   const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, { client });
