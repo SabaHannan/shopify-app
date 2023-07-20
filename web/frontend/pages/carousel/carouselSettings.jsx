@@ -30,7 +30,7 @@ export default function CarouselSettings() {
     const [pauseOnHover, setPauseOnHover] = useState(true);
     const [autoplay, setAutoplay] = useState(false);
 
-    const [autoplaySpeed, setAutoplaySpeed] = useState('3');
+    const [autoplaySpeed, setAutoplaySpeed] = useState('');
     const [slidesToShow, setSlidesToShow] = useState('');
     const [slidesToScroll, setSlidestoScroll] = useState('');
 
@@ -75,6 +75,7 @@ export default function CarouselSettings() {
      */
     const editCarousel = async () => {
         console.log('Updating carousel');
+        
         try {
 
             // Update an existing carousel using id
@@ -94,6 +95,7 @@ export default function CarouselSettings() {
                 slidesToScroll: slidesToScroll
             }
 
+            console.log("au: ", editCarousel);
             console.log('1');
             const { data } = await updateCarousel({ variables: editCarousel })
             console.log('Data: ', data);

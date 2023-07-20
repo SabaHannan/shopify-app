@@ -10,9 +10,9 @@ const DB_PATH = `${process.cwd()}/database.sqlite`;
 const billingConfig = {
   "My Shopify One-Time Charge": {
     // This is an example configuration that would do a one-time charge for $5 (only USD is currently supported)
-    amount: 5.0,
+    amount: 9.95,
     currencyCode: "USD",
-    interval: BillingInterval.OneTime,
+    interval: BillingInterval.Every30Days,
   },
 };
 
@@ -20,7 +20,7 @@ const shopify = shopifyApp({
   api: {
     apiVersion: LATEST_API_VERSION,
     restResources,
-    billing: undefined, // or replace with billingConfig above to enable example billing
+    billing: billingConfig, // or replace with undefined above to disable example billing
   },
   auth: {
     path: "/api/auth",

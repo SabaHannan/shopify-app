@@ -1,39 +1,6 @@
 import { gql, useMutation } from "@apollo/client";
 import client from "../GraphServer";
 
-/**
- * Mutation function to create a new Carousel object in the database
- * @returns - Carousel with ID
- */
-export default function useCreateCarousel() {
-    const CREATE_CAROUSEL_MUTATION = gql`
-    mutation createCarousel(
-      $storeID: Int!
-      $carName: String!
-      $carDescription: String!
-      $carStatus: Boolean!
-    ) {
-      createCarousel(
-        storeID: $storeID
-        carouselName: $carName
-        description: $carDescription
-        activeStatus: $carStatus
-      ) {
-        carouselID
-        storeID
-        carouselName
-        description
-        activeStatus
-      }
-    }
-  `;
-
-    const [createCarousel] = useMutation(CREATE_CAROUSEL_MUTATION, { client });
-
-    return { createCarousel };
-
-};
-
 export const useUpdateCarousel = () => {
     const UPDATE_CAROUSEL_MUTATION = gql`
       mutation updateCarousel(
@@ -50,6 +17,8 @@ export const useUpdateCarousel = () => {
         $slideToShow: Int
         $slidesToScroll: Int
       ) {
+        mutation
+        UpdateCarousel {
           updateCarousel(
             carouselID: $carouselID
             carouselName: $carouselName
@@ -65,11 +34,26 @@ export const useUpdateCarousel = () => {
             slidesToScroll: $slidesToScroll
           ) {
             carouselID
+            storeID
+            carouselName
+            description
+            activeStatus
+            autoplay
+            autoplaySpeed
+            arrows
+            dots
+            infinite
+            pauseOnHover
+            slideToShow
+            slidesToScroll
           }
         }
+      }
     `;
-
+  
     const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, { client });
-
+  
     return { updateCarousel };
-};
+  };
+
+  export default useUpdateCarousel;
