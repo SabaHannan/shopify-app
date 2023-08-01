@@ -6,7 +6,7 @@ import client from "../GraphServer";
  * @returns - Carousel with ID
  */
 export default function useCreateCarousel() {
-    const CREATE_CAROUSEL_MUTATION = gql`
+  const CREATE_CAROUSEL_MUTATION = gql`
     mutation createCarousel(
       $storeID: Int!
       $carName: String!
@@ -35,39 +35,51 @@ export default function useCreateCarousel() {
 };
 
 export const useUpdateCarousel = () => {
-    const UPDATE_CAROUSEL_MUTATION = gql`
-      mutation updateCarousel(
-        $carouselID: Int!
-        $carouselName: String
-        $description: String
-        $activeStatus: Boolean
-        $autoplay: Boolean
-        $autoplaySpeed: Int
-        $arrows: Boolean
-        $dots: Boolean
-        $infinite: Boolean
-        $pauseOnHover: Boolean
-        $slideToShow: Int
-        $slidesToScroll: Int
-      ) {
-          updateCarousel(
-            carouselID: $carouselID
-            carouselName: $carouselName
-            description: $description
-            activeStatus: $activeStatus
-            autoplay: $autoplay
-            autoplaySpeed: $autoplaySpeed
-            arrows: $arrows
-            dots: $dots
-            infinite: $infinite
-            pauseOnHover: $pauseOnHover
-            slideToShow: $slideToShow
-            slidesToScroll: $slidesToScroll
-          ) {
-            carouselID
-          }
+  const UPDATE_CAROUSEL_MUTATION = gql`
+    mutation updateCarousel(
+      $carouselID: Int!
+      $carouselName: String
+      $description: String
+      $activeStatus: Boolean
+      $autoplay: Boolean
+      $autoplaySpeed: Int
+      $arrows: Boolean
+      $dots: Boolean
+      $infinite: Boolean
+      $pauseOnHover: Boolean
+      $slideToShow: Int
+      $slidesToScroll: Int
+    ) {
+        updateCarousel(
+          carouselID: $carouselID
+          carouselName: $carouselName
+          description: $description
+          activeStatus: $activeStatus
+          autoplay: $autoplay
+          autoplaySpeed: $autoplaySpeed
+          arrows: $arrows
+          dots: $dots
+          infinite: $infinite
+          pauseOnHover: $pauseOnHover
+          slideToShow: $slideToShow
+          slidesToScroll: $slidesToScroll
+        ) {
+          carouselID
+          storeID
+          carouselName
+          description
+          activeStatus
+          autoplay
+          autoplaySpeed
+          arrows
+          dots
+          infinite
+          pauseOnHover
+          slideToShow
+          slidesToScroll
         }
-    `;
+      }
+  `;
 
     const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, { client });
 

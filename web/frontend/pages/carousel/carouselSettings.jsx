@@ -30,9 +30,9 @@ export default function CarouselSettings() {
     const [pauseOnHover, setPauseOnHover] = useState(true);
     const [autoplay, setAutoplay] = useState(false);
 
-    const [autoplaySpeed, setAutoplaySpeed] = useState('');
-    const [slidesToShow, setSlidesToShow] = useState('');
-    const [slidesToScroll, setSlidestoScroll] = useState('');
+    const [autoplaySpeed, setAutoplaySpeed] = useState(3);
+    const [slidesToShow, setSlidesToShow] = useState(1);
+    const [slidesToScroll, setSlidestoScroll] = useState(1);
 
     // HANDLE CHECKBOX CHANGE
     const handleArrow = useCallback(
