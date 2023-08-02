@@ -1,4 +1,4 @@
-// FIRST PAGE 
+// FIRST PAGE - Home Page
 import {
   Page,
   Button,
@@ -14,30 +14,6 @@ export default function HomePage() {
   return (
     <Page narrowWidth>
       <TitleBar title={t("HomePage.title")} />
-      {/* <Layout>
-        <Layout.Section> */}
-          {/* <div style={{ backgroundColor: '#fff', borderRadius: '4px', boxShadow: '0 0 4px rgba(0, 0, 0, 0.1)', padding: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}> */}
-              {/* <VerticalStack>
-                <Text as="h2" variant="headingMd">
-                  {t("HomePage.heading")}
-                </Text>
-                <p style={{marginBottom: '10px', marginTop: '10px'}}>
-                  <Trans
-                    i18nKey="HomePage.welcome"
-                  />
-                </p>
-                <p style={{marginBottom: '10px'}}>
-                  <Trans
-                    i18nKey="HomePage.learnMore"
-                  />
-                </p>
-                <p style={{marginBottom: '10px', marginTop: '10px'}}>{t("HomePage.startPopulatingYourApp")}</p>
-        
-                <Button primary url="/carousel/new">
-                  Create
-                </Button>
-              </VerticalStack> */}
       <HorizontalStack>
         <div>
           <MediaCard 
@@ -64,10 +40,6 @@ export default function HomePage() {
           </div>
         </div>
       </HorizontalStack>
-            {/* </div>
-          </div> */}
-        {/* </Layout.Section>
-      </Layout> */}
     </Page>
   );
 }

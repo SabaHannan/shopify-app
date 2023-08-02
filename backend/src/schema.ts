@@ -21,6 +21,14 @@ const imgCarouselSchema = buildSchema(`
         description: String
         activeStatus: Boolean!
         carouselpictures: [carouselPicture!]
+        autoplay: Boolean
+        autoplaySpeed: Int
+        arrows: Boolean
+        dots: Boolean
+        infinite: Boolean
+        pauseOnHover: Boolean
+        slideToShow: Int
+        slidesToScroll: Int
     }
 
     type picture {
@@ -48,7 +56,7 @@ const imgCarouselSchema = buildSchema(`
         deleteStore(storeID: Int!): Boolean!
         
         createCarousel(storeID: Int!, carouselName: String!, description: String!, activeStatus: Boolean!): carousel!
-        updateCarousel(carouselID: Int!, carouselName: String, description: String, activeStatus: Boolean): carousel!
+        updateCarousel(carouselID: Int!, carouselName: String, description: String, activeStatus: Boolean, autoplay: Boolean, autoplaySpeed: Int, arrows: Boolean, dots: Boolean, infinite: Boolean, pauseOnHover: Boolean, slideToShow: Int, slidesToScroll: Int): carousel!
         deleteCarousel(carouselID: Int!): Boolean!
         
         createPicture(pictureName: String!, pictureData: String!): picture!

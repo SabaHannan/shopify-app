@@ -2,11 +2,8 @@ import {
     Page,
     Button,
   } from "@shopify/polaris";
-// import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { SlickImages } from '../../components/SlickImages';
-// Importing the pictures object array
-// import { pictures }  from './new';
 import { imageFiles }  from './new';
 
 // Page that a person can edit and see one of their carousels. Should take in an ID

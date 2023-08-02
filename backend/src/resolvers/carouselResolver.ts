@@ -41,12 +41,20 @@ const carouselResolver = {
     },
 
     //Mutation method to update an existing carousel
-    updateCarousel: async (args: {carouselID: number, carouselName: string, description: string, activeStatus: Boolean}): Promise<carousel> => {
+    updateCarousel: async (args: {carouselID: number, carouselName: string, description: string, activeStatus: Boolean,  autoplay: Boolean, autoplaySpeed: number, arrows: Boolean, dots: Boolean, infinite: Boolean, pauseOnHover: Boolean, slideToShow: number, slidesToScroll: number}): Promise<carousel> => {
 
         let upCarousel: carousel = new carousel({
             carouselName: args.carouselName,
             description: args.description,
-            activeStatus: args.activeStatus
+            activeStatus: args.activeStatus,
+            autoplay: args.autoplay,
+            autoplaySpeed: args.autoplaySpeed,
+            arrows: args.arrows,
+            dots: args.dots,
+            infinite: args.infinite,
+            pauseOnHover: args.pauseOnHover,
+            slideToShow: args.slideToShow,
+            slidesToScroll: args.slidesToScroll
         });
 
         try {
