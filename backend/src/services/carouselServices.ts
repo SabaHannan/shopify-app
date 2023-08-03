@@ -52,10 +52,19 @@ export const createCarousel = async (nuCarousel: carousel): Promise<carousel> =>
  * @returns upCar - json carousel object
  */
 export const updateCarousel = async (carouselID: number, updateCarousel: carousel): Promise<carousel> => {
+    
     let carData = {
         carouselName: updateCarousel.carouselName,
         description: updateCarousel.description,
-        activeStatus: updateCarousel.activeStatus
+        activeStatus: updateCarousel.activeStatus,
+        autoplay: updateCarousel.autoplay,
+        autoplaySpeed: updateCarousel.autoplaySpeed,
+        arrows: updateCarousel.arrows,
+        dots: updateCarousel.dots,
+        infinite: updateCarousel.infinite,
+        pauseOnHover: updateCarousel.pauseOnHover,
+        slideToShow: updateCarousel.slideToShow,
+        slidesToScroll: updateCarousel.slidesToScroll
     } 
 
     let upCar: carousel = new carousel();
