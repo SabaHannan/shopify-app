@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 // Importing the entire recently saved carousel
 import { carousel } from './new';
 import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
+var createdCarousel = [];
 
 export default function CarouselSettings() {
 
@@ -95,10 +96,8 @@ export default function CarouselSettings() {
                 slidesToScroll: slidesToScroll
             }
 
-            console.log("au: ", editCarousel);
-            console.log('1');
             const { data } = await updateCarousel({ variables: editCarousel })
-            console.log('Data: ', data);
+            createdCarousel.push(data.updateCarousel);
 
         }
         catch (error) {
