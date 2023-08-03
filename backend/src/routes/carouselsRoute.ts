@@ -45,7 +45,7 @@ carouselRoute.post("/", async (req, res) => {
     }
 });
 
-carouselRoute.put("updaetCarousel/:carouselID", async (req, res) => {
+carouselRoute.put("updateCarousel/:carouselID", async (req, res) => {
 
     const { carouselName, description, activeStatus,  autoplay, autoplaySpeed, arrows, dots, infinite, pauseOnHover, slideToShow, slidesToScroll } = req.body;
     const carouselID: number = parseInt(req.params.carouselID, 10);

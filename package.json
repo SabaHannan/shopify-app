@@ -9,6 +9,7 @@
     "restart": "pm2 restart ecosystem.config.js",
     "shopify": "shopify",
     "build": "shopify app build",
+    "build:webpack": "webpack",
     "dev": "shopify app dev",
     "info": "shopify app info",
     "generate": "shopify app generate",
@@ -39,9 +40,17 @@
   ],
   "devDependencies": {
     "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.9",
     "@babel/plugin-syntax-import-meta": "^7.10.4",
-    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
-    "@types/pg": "^8.10.2"
+    "@types/pg": "^8.10.2",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "file-loader": "^6.2.0",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   }
 }
