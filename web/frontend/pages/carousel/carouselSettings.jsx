@@ -102,7 +102,11 @@ export default function CarouselSettings() {
                 slidesToScroll: slidesToScroll
             }
 
+            console.log('variables: ', editCarousel);
+
             const { data } = await updateCarousel({ variables: editCarousel })
+            console.log('data: ', data);
+
             createdCarousel.push(data.updateCarousel);
             console.log('Updated: ', createdCarousel);
 
@@ -146,7 +150,7 @@ export default function CarouselSettings() {
                             label="Autoplay Speed"
                             helpText="Speed in miliseconds"
                             options={['1000', '2000', '3000', '4000']}
-                            value={autoplaySpeed}
+                            value={autoplaySpeed.toString()}
                             onChange={handleAutoplaySpeed}
                         />
                     </div>
@@ -174,7 +178,7 @@ export default function CarouselSettings() {
                         <Select
                             label="Images to show"
                             options={['1', '2', '3', '4']}
-                            value={slidesToShow}
+                            value={slidesToShow.toString()}
                             onChange={handleSlidesToShow}
                         />
                     </div>
@@ -182,7 +186,7 @@ export default function CarouselSettings() {
                         <Select
                             label="Images to scroll"
                             options={['1', '2', '3', '4']}
-                            value={slidesToScroll}
+                            value={slidesToScroll.toString()}
                             onChange={handleSlidesToScroll}
                         />
                     </div>
