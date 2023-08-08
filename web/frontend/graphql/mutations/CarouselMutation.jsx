@@ -24,21 +24,14 @@ export default function useCreateCarousel() {
         carouselName
         description
         activeStatus
-        autoplay
-        autoplaySpeed
-        arrows
-        dots
-        infinite
-        pauseOnHover
-        slideToShow
-        slidesToScroll
       }
     }
   `;
 
-  const [createCarousel] = useMutation(CREATE_CAROUSEL_MUTATION, { client });
+    const [createCarousel] = useMutation(CREATE_CAROUSEL_MUTATION, { client });
 
-  return { createCarousel };
+    return { createCarousel };
+
 };
 
 export const useUpdateCarousel = () => {
@@ -88,7 +81,7 @@ export const useUpdateCarousel = () => {
       }
   `;
 
-  const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, { client });
+    const [updateCarousel] = useMutation(UPDATE_CAROUSEL_MUTATION, { client });
 
-  return { updateCarousel };
+    return { updateCarousel };
 };

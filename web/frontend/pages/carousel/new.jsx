@@ -100,7 +100,7 @@ export default function ManageCode() {
 
     // Navigating to the next page
     console.log("NOW WE HERE!")
-    navigate('/carousel/CarouselSettings');
+    navigate('/carousel/carouselSettings');
   }
 
   /**

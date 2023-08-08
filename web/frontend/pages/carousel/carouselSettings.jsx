@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 // Importing the entire recently saved carousel
 import { carousel } from './new';
 import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
+var createdCarousel = [];
 
 export default function CarouselSettings() {
 
@@ -56,18 +57,24 @@ export default function CarouselSettings() {
         [],
     );
 
-    // HANDLE SELECT CHANGE
     const handleAutoplaySpeed = useCallback(
-        (value) => setAutoplaySpeed(value),
-        [],
+        (value) => {
+            const newAutoplaySpeed = parseInt(value); // Parse value to integer
+            setAutoplaySpeed(newAutoplaySpeed);
+        },
     );
+
     const handleSlidesToShow = useCallback(
-        (value) => setSlidesToShow(value),
-        [],
+        (value) => {
+            const newSlidesToShow = parseInt(value); // Parse value to integer
+            setSlidesToShow(newSlidesToShow);
+        },
     );
     const handleSlidesToScroll = useCallback(
-        (value) => setSlidestoScroll(value),
-        [],
+        (value) => {
+            const newSlidesToScroll = parseInt(value); // Parse value to integer
+            setSlidestoScroll(newSlidesToScroll);
+        },
     );
 
     /**
@@ -75,15 +82,16 @@ export default function CarouselSettings() {
      */
     const editCarousel = async () => {
         console.log('Updating carousel');
+
         try {
 
             // Update an existing carousel using id
             const editCarousel = {
-                
+
                 carouselID: carousel.carouselID,
-                carouselName : carousel.carouselName, 
-                description : carousel.description,
-                activeStatus : carousel.activeStatus,
+                carouselName: carousel.carouselName,
+                description: carousel.description,
+                activeStatus: carousel.activeStatus,
                 autoplay: autoplay,
                 autoplaySpeed: autoplaySpeed,
                 arrows: arrows,
@@ -94,9 +102,9 @@ export default function CarouselSettings() {
                 slidesToScroll: slidesToScroll
             }
 
-            console.log('1');
             const { data } = await updateCarousel({ variables: editCarousel })
-            console.log('Data: ', data);
+            createdCarousel.push(data.updateCarousel);
+            console.log('Updated: ', createdCarousel);
 
         }
         catch (error) {
