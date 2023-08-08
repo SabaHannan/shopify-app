@@ -4,13 +4,10 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
+import { createdCarousel } from '../pages/carousel/carouselSettings';
 
 // Function takes in an array of image objects
 export function SlickImages ({ imageObj }) {
-
-    imageObj.forEach(f => {
-        console.log('files: ' + f);
-    });
 
     const [imageUrls, setImageUrls] = useState([]);
 
@@ -20,11 +17,13 @@ export function SlickImages ({ imageObj }) {
                 imageObj.map((image) => createImageFromObjectUrl(image))
             );
             setImageUrls(urls);
+            console.log('1: ', urls);
         };
 
         loadImageUrls();
   }, [imageObj]);
 
+  console.log('2: ', imageUrls);
 
     const settings = {
         dots: true,
@@ -63,15 +62,22 @@ export function SlickImages ({ imageObj }) {
             // instead of a settings object
         ]
     }
-  
+    
     return (
         // Iterate through the images array and assign to <div>
         <Slider {...settings}>
             {imageUrls.map((image, index) => (
                 <div id="carouselWrapper" key={index}>
+                    <p>{image}</p>
                     <img src={image} alt="" />
                 </div>
             ))}
+            {/* <div className="carouselWrapper">
+                <img src='../assets/1.jpg'></img>
+            </div>
+            <div className="carouselWrapper">
+                <img src='../assets/2.jpg'></img>
+            </div> */}
         </Slider>
     );
 }

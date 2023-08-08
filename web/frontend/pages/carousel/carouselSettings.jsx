@@ -10,13 +10,16 @@ import {
 } from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from 'react-router-dom';
 // Importing the entire recently saved carousel
 import { carousel } from './new';
 import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
-var createdCarousel = [];
+export var createdCarousel = [];
 
 export default function CarouselSettings() {
 
+    // TO ROUTE TO A DIFFERENT PAGE IN APP
+    const navigate = useNavigate();
     // TRANSLATION
     const { t } = useTranslation();
     // UPDATE FUNCTION
@@ -107,7 +110,8 @@ export default function CarouselSettings() {
             const { data } = await updateCarousel({ variables: editCarousel })
             console.log('data: ', data);
 
-            createdCarousel.push(data.updateCarousel);
+            //createdCarousel.push(data.updateCarousel);
+            createdCarousel = editCarousel;
             console.log('Updated: ', createdCarousel);
 
         }
@@ -119,6 +123,7 @@ export default function CarouselSettings() {
     const handleSave = () => {
         console.log("Clicked save");
         editCarousel();
+        navigate('/carousel/imageCarousel');
     }
 
     return (
