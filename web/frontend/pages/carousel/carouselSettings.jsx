@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 // Importing the entire recently saved carousel
 import { carousel } from './new';
 import { useUpdateCarousel } from '../../graphql/mutations/CarouselMutation';
-export var createdCarousel = [];
+export var createdCarousel;
 
 export default function CarouselSettings() {
 
@@ -24,8 +24,6 @@ export default function CarouselSettings() {
     const { t } = useTranslation();
     // UPDATE FUNCTION
     const { updateCarousel } = useUpdateCarousel();
-
-    console.log("carousel: ", carousel);
 
     // SLIDER SETTINGS
     const [arrows, setArrows] = useState(false);
@@ -105,14 +103,13 @@ export default function CarouselSettings() {
                 slidesToScroll: slidesToScroll
             }
 
-            console.log('variables: ', editCarousel);
+            console.log('editCarousel: ', editCarousel);
+            createdCarousel = editCarousel;
+            console.log('createdCarousel: ', createdCarousel);
 
             const { data } = await updateCarousel({ variables: editCarousel })
-            console.log('data: ', data);
 
             //createdCarousel.push(data.updateCarousel);
-            createdCarousel = editCarousel;
-            console.log('Updated: ', createdCarousel);
 
         }
         catch (error) {
@@ -121,7 +118,7 @@ export default function CarouselSettings() {
     }
 
     const handleSave = () => {
-        console.log("Clicked save");
+        console.log("CAROUSELSETTINGS.JSX -> IMAGECAROUSEL.JSX");
         editCarousel();
         navigate('/carousel/imageCarousel');
     }

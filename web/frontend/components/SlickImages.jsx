@@ -9,6 +9,8 @@ import { createdCarousel } from '../pages/carousel/carouselSettings';
 // Function takes in an array of image objects
 export function SlickImages ({ imageObj }) {
 
+    console.log('slick-images: ', createdCarousel);
+
     const [imageUrls, setImageUrls] = useState([]);
 
     useEffect(() => {
@@ -17,13 +19,10 @@ export function SlickImages ({ imageObj }) {
                 imageObj.map((image) => createImageFromObjectUrl(image))
             );
             setImageUrls(urls);
-            console.log('1: ', urls);
         };
 
         loadImageUrls();
   }, [imageObj]);
-
-  console.log('2: ', imageUrls);
 
     const settings = {
         dots: true,
@@ -68,7 +67,6 @@ export function SlickImages ({ imageObj }) {
         <Slider {...settings}>
             {imageUrls.map((image, index) => (
                 <div id="carouselWrapper" key={index}>
-                    <p>{image}</p>
                     <img src={image} alt="" />
                 </div>
             ))}

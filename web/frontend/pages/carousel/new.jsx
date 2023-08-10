@@ -99,7 +99,7 @@ export default function ManageCode() {
     }
 
     // Navigating to the next page
-    console.log("NOW WE HERE!")
+    console.log("NEW.JSX -> CAROUSELSETTINGS.JSX")
     navigate('/carousel/carouselSettings');
   }
 
