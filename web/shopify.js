@@ -16,6 +16,15 @@ const billingConfig = {
   },
 };
 
+// const billingConfig = {
+//   "Standard Plan": {
+//     amount: 100.00,
+//     currencyCode: "USD",
+//     interval: BillingInterval.Every30Days,
+//     trialDays: 7,
+//   },
+// };
+
 const shopify = shopifyApp({
   api: {
     apiVersion: LATEST_API_VERSION,

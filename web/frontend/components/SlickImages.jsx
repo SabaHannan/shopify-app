@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import '../slick-carousel/slick.css';
 import '../slick-carousel/slick-theme.css';
-import { createdCarousel } from '../pages/carousel/carouselSettings';
+import { createdCarousel } from '../pages/carousel/carouselSettings.jsx';
 
 // Function takes in an array of image objects
 export function SlickImages ({ imageObj }) {

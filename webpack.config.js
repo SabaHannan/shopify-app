@@ -3,15 +3,22 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./web/frontend/components/SlickImages.jsx",
+  entry: "./web/frontend/index.jsx",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname, "extensions/image-carousel-theme-extension/js"),
+    path: path.resolve(__dirname, "extensions/image-carousel-extension/js"),
+  },
+  resolve: {
+    fallback: {
+      path: "path-browserify",
+      fs: false,
+      stream: "stream-browserify"
+    }
   },
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
@@ -30,7 +37,7 @@ module.exports = {
           loader: "file-loader",
           options: {
             name: "[name].[ext]",
-            outputPath: "extensions/image-carousel-theme-extension/slick-carousel/fonts",
+            outputPath: "extensions/image-carousel-extension/slick-carousel/fonts",
           },
         },
       },
@@ -40,7 +47,7 @@ module.exports = {
           loader: "file-loader",
           options: {
             name: "[name].[ext]",
-            outputPath: "extensions/image-carousel-theme-extension/slick-carousel",
+            outputPath: "extensions/image-carousel-extension/slick-carousel",
           },
         },
       },
@@ -51,11 +58,11 @@ module.exports = {
       patterns: [
         {
           from: "web/frontend/slick-carousel/fonts/slick.*",
-          to: "extensions/image-carousel-theme-extension/slick-carousel/fonts/[name].[ext]",
+          to: "extensions/image-carousel-extension/slick-carousel/fonts/[name].[ext]",
         },
         {
           from: "web/frontend/slick-carousel/ajax-loader.gif",
-          to: "extensions/image-carousel-theme-extension/slick-carousel/[name].[ext]",
+          to: "extensions/image-carousel-extension/slick-carousel/[name].[ext]",
         },
       ],
     }),
