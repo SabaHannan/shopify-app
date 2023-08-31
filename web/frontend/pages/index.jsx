@@ -2,44 +2,88 @@
 import {
   Page,
   Button,
-  MediaCard,
-  HorizontalStack,
+  VerticalStack,
+  HorizontalGrid,
+  LegacyCard,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation, Trans } from "react-i18next";
+import BackgroundImage from "../components/providers/BackgroundImg";
 
 export default function HomePage() {
   const { t } = useTranslation();
 
   return (
-    <Page narrowWidth>
-      <TitleBar title={t("HomePage.title")} />
-      <HorizontalStack>
-        <div>
-          <MediaCard 
-            title={t("HomePage.heading")}
-            description={<Trans i18nKey="HomePage.welcome"/>}
+    <Page>
+      <BackgroundImage />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "80vh", // Use the entire viewport height
+        }}
+      >
+        <VerticalStack spacing="extraTight">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "35vh",
+            }}
           >
-  
-            {/* IMAGE SOURCE */}
-            <img
-              alt=""
-              width="100%"
-              height="100%"
-              style={{
-                objectFit: 'fill',
-                objectPosition: 'center',
-              }}
-              src="../assets/image-carousel.jpg"
-            />
-          </MediaCard>
-
-          {/* BUTTON COMPONENT */}
-          <div style={{ marginTop: '16px', textAlign: 'center' }}>
-            <Button primary fullWidth url="/carousel/new">Create</Button>
+            <HorizontalGrid spacing="extraLoose" columns={4}>
+              <div>
+                <img
+                  src="../assets/ICA-WPage-GirlWithFashionBag.jpg"
+                  alt="image 1"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
+              <div>
+                <img
+                  src="../assets/ICA-WPage-BoyWithYellowJacket.jpg"
+                  alt="image 2"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
+              <div>
+                <img
+                  src="../assets/ICA-WPage-BoyWithBrownJacket.jpg"
+                  alt="image 3"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
+              <div>
+                <img
+                  src="../assets/ICA-WPage-GirlWithYellowJacket.jpg"
+                  alt="image 4"
+                  style={{ maxWidth: "100%", maxHeight: "100%" }}
+                />
+              </div>
+            </HorizontalGrid>
           </div>
-        </div>
-      </HorizontalStack>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "15vh",
+            }}
+          >
+            <LegacyCard sectioned subdued>
+              <p style={{ textAlign: "center" }}>{t("HomePage.welcome")}</p>
+            </LegacyCard>
+          </div>
+
+          <div style={{ marginTop: "16px", textAlign: "center" }}>
+            <Button fullWidth url="/carousel/new">
+              <strong>Create</strong>
+            </Button>
+          </div>
+        </VerticalStack>
+      </div>
     </Page>
   );
 }
