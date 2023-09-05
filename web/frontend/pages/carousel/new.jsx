@@ -1,5 +1,5 @@
 // 2nd PAGE - Create a carousel
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Page,
   Layout,
@@ -10,15 +10,17 @@ import {
   DropZone,
   Form,
   Thumbnail,
+  Button,
 } from "@shopify/polaris";
-import { TitleBar } from "@shopify/app-bridge-react";
 import { useTranslation } from "react-i18next";
 import { NoteMinor } from "@shopify/polaris-icons";
-import { useNavigate } from 'react-router-dom';
-import useCreatePicture from '../../graphql/mutations/PictureMutation';
+import { useNavigate } from "react-router-dom";
+import useCreatePicture from "../../graphql/mutations/PictureMutation";
 import { serialiseFile } from "../../graphql/SerializeFile";
-import useCreateCarousel from '../../graphql/mutations/CarouselMutation';
-import useCreateCarouselPicture from '../../graphql/mutations/CarouselPictureMuation';
+import useCreateCarousel from "../../graphql/mutations/CarouselMutation";
+import useCreateCarouselPicture from "../../graphql/mutations/CarouselPictureMuation";
+import BackgroundImage from "../../components/providers/BackgroundImg";
+
 // DATABASE IMAGES ARRAY
 var pictures = [];
 export var imageFiles = [];
@@ -38,7 +40,7 @@ export default function ManageCode() {
   // TO ROUTE TO A DIFFERENT PAGE IN APP
   const navigate = useNavigate();
   const { createPicture, loading } = useCreatePicture();
-  //DATABASE CAROUSEL 
+  //DATABASE CAROUSEL
   // var [carousel, setCarousel] = useState();
   const { createCarousel } = useCreateCarousel();
   //DATABASE CAROUSEL_PICTURE
@@ -48,15 +50,14 @@ export default function ManageCode() {
   // DROPZONE CHANGE
   const handleDrop = (files) => {
     setSelectedFiles(files);
-    files.forEach(f => {
+    files.forEach((f) => {
       imageFiles.push(f);
-    })
-
+    });
   };
 
   // HANDLE FORM SUBMISSION
   const handleSubmit = async () => {
-    console.log("SAVING IMAGES!")
+    console.log("SAVING IMAGES!");
 
     //Create Carousel intansce in the database first before uploading the pictures
     await makeCarousel();
@@ -70,116 +71,115 @@ export default function ManageCode() {
 
         const nuPic = {
           picName: file.name,
-          picData: binData
-        }
+          picData: binData,
+        };
 
         const { data } = await createPicture({ variables: nuPic });
 
         if (loading) {
-          console.log("loading...")
+          console.log("loading...");
         }
 
         createdPictures.push(data.createPicture);
 
         //create carouselpicture intance
-        await makeCarouselPicture(carousel.carouselID, data.createPicture.pictureID);
-
+        await makeCarouselPicture(
+          carousel.carouselID,
+          data.createPicture.pictureID
+        );
       }
 
       pictures = createdPictures;
 
-      pictures.forEach(pic => {
+      pictures.forEach((pic) => {
         console.log(pic);
-      })
-    }
-    catch (error) {
+      });
+    } catch (error) {
       // If there is an error, set the error state
-      setErrorMessage('There was an error uploading the image.');
-      console.error("Something went very wrong Stephen: ", error)
+      setErrorMessage("There was an error uploading the image.");
+      console.error("Something went very wrong Stephen: ", error);
     }
 
     // Navigating to the next page
-    console.log("NEW.JSX -> CAROUSELSETTINGS.JSX")
-    navigate('/carousel/carouselSettings');
-  }
+    console.log("NEW.JSX -> CAROUSELSETTINGS.JSX");
+    navigate("/carousel/carouselSettings");
+  };
 
   /**
    * Function for sending a new CarouselPicture to the database
-   * @param {*} carID 
-   * @param {*} picID 
+   * @param {*} carID
+   * @param {*} picID
    */
   const makeCarouselPicture = async (carID, picID) => {
     try {
       //Create a CarousePicture instance
       const nuCarouselPicture = {
         carouselID: carID,
-        pictureID: picID
-      }
+        pictureID: picID,
+      };
 
-      const { data } = await createCarouselPicture({ variables: nuCarouselPicture });
+      const { data } = await createCarouselPicture({
+        variables: nuCarouselPicture,
+      });
 
       console.log(data.createCarouselPicture);
 
       carouselPictures.push(data.createCarouselPicture);
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Something went wrong with create CarouselPicture", error);
     }
-  }
+  };
 
   /**
    * Function to create and save a new Carousel into the database
    */
   const makeCarousel = async () => {
-
     //Create carousel instance from the title and description
     console.log("CREATING CAROUSEL");
 
     try {
-
       const nuCarousel = {
         storeID: 4,
         carName: title,
         carDescription: description,
-        carStatus: false
-      }
+        carStatus: false,
+      };
 
-      const { data } = await createCarousel({ variables: nuCarousel })
+      const { data } = await createCarousel({ variables: nuCarousel });
 
       // Getting the created carousel
       carousel = data.createCarousel;
-
+    } catch (error) {
+      console.error("Something went wrong: ", error);
     }
-    catch (error) {
-      console.error("Something went wrong: ", error)
-    }
+  }; // End makeCarousel
 
-  } // End makeCarousel
-
-  const validImageTypes = ['image/*'];
+  const validImageTypes = ["image/*"];
   // If the selectedFiles array is empty then display the <DropZone.FileUpload>
   const fileUpload = !selectedFiles.length && <DropZone.FileUpload />;
 
   // Maps over the selectedFiles state to render thumbnail previews of the selected image files
   const renderThumbnails = selectedFiles.length > 0 && (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       {selectedFiles.map((file, index) => (
-        <div style={{ display: 'flex', alignItems: 'center' }} key={index}>
+        <div style={{ display: "flex", alignItems: "center" }} key={index}>
           <Thumbnail
             size="small"
             alt={file.name}
             source={
               validImageTypes.includes(file.type)
-                // If statement to either render the actual file preview or NoteMinor icon
-                ? URL.createObjectURL(file)
+                ? // If statement to either render the actual file preview or NoteMinor icon
+                  URL.createObjectURL(file)
                 : NoteMinor
             }
           />
           {/*console.log("URL: " + URL.createObjectURL(file))*/}
           {/* Div to display the caption of the thumbnails */}
           <div>
-            {file.name} <Text variant="bodySm" as='p'>{file.size} bytes</Text>
+            {file.name}{" "}
+            <Text variant="bodySm" as="p">
+              {file.size} bytes
+            </Text>
             {/*console.log("file name" + file.name)*/}
           </div>
         </div>
@@ -187,27 +187,28 @@ export default function ManageCode() {
     </div>
   );
 
-  // HANDLE FORM CHANGES 
+  // HANDLE FORM CHANGES
   const handleFormTitleChange = (value) => setTitle(value);
   const handleFormDescriptionChange = (value) => setDescription(value);
 
   return (
     <Page>
-      
-      <Layout>
-      <TitleBar title={t("HomePage.title")}
-        primaryAction={{
-          content: "Next",
-          onAction: handleSubmit
+      <BackgroundImage />
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center",
+          height: "10vh",
         }}
-      />
-        <Layout.Section>
-          {/* ERROR MESSAGE */}
-          {errorMessage && (
-            <Banner status="critical">{errorMessage}</Banner>
-          )}
-        </Layout.Section>
-      </Layout>
+      >
+        <Text variant="heading2xl" as="h3">
+          Create a Manual carousel
+        </Text>
+      </div>
 
       <Form>
         <FormLayout>
@@ -219,7 +220,7 @@ export default function ManageCode() {
               onChange={handleFormTitleChange}
               value={title}
               helpText="Title of the carousel"
-              autoComplete='off'
+              autoComplete="off"
             />
           </div>
           {/* DESCRIPTION OF THE IMAGE CAROUSEL */}
@@ -230,24 +231,25 @@ export default function ManageCode() {
               onChange={handleFormDescriptionChange}
               value={description}
               helpText="Briefly describe the carousel you want to create"
-              autoComplete='off'
+              autoComplete="off"
             />
           </div>
 
           {/* IMAGE UPLOADING */}
           <div>
             <Text>Upload Carousel Images</Text>
-            <DropZone
-              accept="image/*"
-              dropOnPage
-              onDrop={handleDrop}
-            >
+            <DropZone accept="image/*" dropOnPage onDrop={handleDrop}>
               {renderThumbnails}
               {fileUpload}
             </DropZone>
           </div>
         </FormLayout>
       </Form>
+      <div style={{ marginTop: "16px", textAlign: "center" }}>
+        <Button size="medium" fullWidth onClick={handleSubmit}>
+          <strong>Next</strong>
+        </Button>
+      </div>
     </Page>
   );
 }
