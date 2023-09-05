@@ -6,7 +6,7 @@ const BackgroundImage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../assets/1149233_5212.jpg');
+  background-image: url('../../assets/Purple_background.jpg');
   background-size: cover;
   opacity: 0.5;
   z-index: -1;
