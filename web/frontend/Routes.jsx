@@ -1,4 +1,6 @@
 import { Routes as ReactRouterRoutes, Route } from "react-router-dom";
+import CarouselTypePage from "./pages/CarouselType";
+import ManageCode from "./pages/carousel/new";
 
 /**
  * File-based routing.
@@ -56,6 +58,14 @@ function useRoutes(pages) {
 
       if (!pages[key].default) {
         console.warn(`${key} doesn't export a default React component`);
+      }
+
+      // Add the LoginPage route
+      if (path === '/CarouselType') {
+        return {
+          path,
+          component: CarouselTypePage,
+        };
       }
 
       return {
