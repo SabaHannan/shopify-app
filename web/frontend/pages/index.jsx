@@ -5,12 +5,22 @@ import {
   VerticalStack,
   HorizontalGrid,
   LegacyCard,
+  Text
 } from "@shopify/polaris";
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import BackgroundImage from "../components/providers/BackgroundImg";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  function handleCreateButton(event) {
+    navigate('./CarouselType');
+
+    console.log("Navigate to choose carousels")
+  }
 
   return (
     <Page>
@@ -29,7 +39,7 @@ export default function HomePage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              height: "35vh",
+              height: "25vh",
             }}
           >
             <HorizontalGrid spacing="extraLoose" columns={4}>
@@ -73,12 +83,12 @@ export default function HomePage() {
             }}
           >
             <LegacyCard sectioned subdued>
-              <p style={{ textAlign: "center" }}>{t("HomePage.welcome")}</p>
+              <Text alignment="center" variant="headingSm" as="h6">{t("HomePage.welcome")}</Text>
             </LegacyCard>
           </div>
 
           <div style={{ marginTop: "16px", textAlign: "center" }}>
-            <Button fullWidth url="/carousel/new">
+            <Button size="medium" fullWidth onClick={handleCreateButton}>
               <strong>Create</strong>
             </Button>
           </div>
