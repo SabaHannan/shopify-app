@@ -3,17 +3,13 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./web/frontend/index.jsx",
+  entry: "./index.js",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "extensions/image-carousel-extension/js"),
   },
   resolve: {
-    fallback: {
-      path: "path-browserify",
-      fs: false,
-      stream: "stream-browserify"
-    }
+    extensions: [".js", ".jsx"],
   },
   module: {
     rules: [
@@ -67,4 +63,7 @@ module.exports = {
       ],
     }),
   ],
+  optimization: {
+    minimize: process.env.NODE_ENV === "production",
+  },
 };
